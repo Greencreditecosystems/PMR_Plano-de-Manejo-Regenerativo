@@ -1,0 +1,2203 @@
+<!DOCTYPE html>
+<html lang="pt-BR" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PMR — Plano de Manejo Regenerativo | Green Credit Ecosystems</title>
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-dark:   #1B5E20;
+      --green-mid:    #388E3C;
+      --green-light:  #A5D6A7;
+      --green-xlight: #E8F5E9;
+      --gold:         #F9A825;
+      --amber:        #FF8F00;
+      --red:          #C62828;
+      --red-light:    #FFEBEE;
+      --blue-dark:    #1565C0;
+      --blue-light:   #E3F2FD;
+      --orange-dark:  #BF360C;
+      --orange-light: #FBE9E7;
+      --purple-dark:  #4A148C;
+      --purple-mid:   #6A1B9A;
+      --purple-light: #F3E5F5;
+      --neutral-bg:   #F5F5F5;
+      --neutral-dark: #212121;
+      --white:        #FFFFFF;
+      --sidebar-w:    270px;
+      --header-h:     70px;
+      --shadow:       0 2px 12px rgba(0,0,0,0.10);
+      --radius:       10px;
+      --transition:   0.3s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--neutral-bg);
+      color: var(--neutral-dark);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: linear-gradient(135deg, var(--green-dark) 60%, var(--green-mid));
+      color: var(--white);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+    .header-brand { display: flex; align-items: center; gap: 14px; }
+    .header-logo {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 18px; color: var(--green-dark);
+      flex-shrink: 0;
+    }
+    .header-titles h1 { font-size: 1.05rem; font-weight: 700; letter-spacing: .3px; }
+    .header-titles p  { font-size: 0.72rem; opacity: .82; margin-top: 1px; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .version-badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px; padding: 3px 12px;
+      font-size: 0.70rem; color: var(--white);
+    }
+    #lang-btn {
+      background: var(--gold);
+      border: none; border-radius: 22px;
+      padding: 7px 18px;
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--green-dark);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+      transition: background var(--transition), transform var(--transition);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      flex-shrink: 0;
+    }
+    #lang-btn:hover { background: #ffe082; transform: scale(1.04); }
+    #lang-btn:focus-visible { outline: 3px solid var(--white); outline-offset: 2px; }
+    #lang-btn .flag { font-size: 1.1rem; }
+    #sidebar-toggle {
+      display: none;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px; padding: 6px 11px;
+      color: var(--white); font-size: 1.1rem;
+      cursor: pointer; transition: background var(--transition);
+    }
+    #sidebar-toggle:hover { background: rgba(255,255,255,0.28); }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .layout {
+      display: flex;
+      margin-top: var(--header-h);
+      min-height: calc(100vh - var(--header-h));
+    }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
+    aside#sidebar {
+      width: var(--sidebar-w);
+      background: var(--white);
+      border-right: 1px solid #ddd;
+      position: fixed;
+      top: var(--header-h); bottom: 0; left: 0;
+      overflow-y: auto;
+      z-index: 900;
+      transition: transform var(--transition);
+      padding-bottom: 24px;
+    }
+    .sidebar-header {
+      background: var(--green-xlight);
+      padding: 14px 18px;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--green-dark); letter-spacing: 1px;
+      text-transform: uppercase; border-bottom: 1px solid #c8e6c9;
+    }
+    .sidebar-divider {
+      height: 1px; background: #e0e0e0;
+      margin: 4px 14px;
+    }
+    aside#sidebar nav ul { list-style: none; padding: 8px 0; }
+    aside#sidebar nav ul li a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 18px;
+      color: var(--neutral-dark); text-decoration: none;
+      font-size: 0.82rem;
+      border-left: 3px solid transparent;
+      transition: all var(--transition);
+    }
+    aside#sidebar nav ul li a:hover,
+    aside#sidebar nav ul li a.active {
+      background: var(--green-xlight);
+      border-left-color: var(--green-mid);
+      color: var(--green-dark); font-weight: 600;
+    }
+    aside#sidebar nav ul li a .nav-icon { font-size: 1rem; min-width: 20px; }
+
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
+    main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 36px 40px 60px;
+      max-width: 100%;
+    }
+
+    /* ============================================================
+       INTRO SECTION
+    ============================================================ */
+    .intro-section {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 60%, #66BB6A 100%);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+    .intro-section h2 {
+      font-size: 1.45rem; font-weight: 900;
+      margin-bottom: 14px; letter-spacing: .3px;
+    }
+    .intro-section p {
+      font-size: 0.88rem; line-height: 1.75;
+      opacity: .92; margin-bottom: 12px;
+    }
+    .intro-badges {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+    }
+    .intro-badge {
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 20px; padding: 4px 13px;
+      font-size: 0.72rem; font-weight: 600;
+      color: var(--white);
+    }
+
+    /* ============================================================
+       DOC SECTIONS
+    ============================================================ */
+    .doc-section {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .section-header {
+      background: linear-gradient(90deg, var(--green-dark), var(--green-mid));
+      color: var(--white);
+      padding: 18px 28px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .section-header .sec-icon { font-size: 1.5rem; }
+    .section-header h2 { font-size: 1.08rem; font-weight: 700; }
+    .section-header .sec-num {
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .section-body { padding: 28px; }
+
+    /* ============================================================
+       SUBSECTIONS
+    ============================================================ */
+    .subsection { margin-bottom: 28px; }
+    .subsection:last-child { margin-bottom: 0; }
+    .subsection h3 {
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--green-dark);
+      border-left: 4px solid var(--green-mid);
+      padding-left: 12px; margin-bottom: 14px;
+    }
+
+    /* ============================================================
+       ACCORDION
+    ============================================================ */
+    .accordion-btn {
+      width: 100%;
+      background: var(--green-xlight);
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.84rem; font-weight: 600;
+      color: var(--green-dark);
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background var(--transition);
+      margin-bottom: 0;
+    }
+    .accordion-btn:hover { background: #c8e6c9; }
+    .accordion-btn.open { border-radius: 8px 8px 0 0; background: #c8e6c9; }
+    .acc-arrow { transition: transform var(--transition); font-size: 0.75rem; }
+    .accordion-btn.open .acc-arrow { transform: rotate(180deg); }
+    .accordion-content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease;
+      border: 1px solid #c8e6c9; border-top: none;
+      border-radius: 0 0 8px 8px;
+    }
+    .accordion-content.open { max-height: 2000px; }
+    .accordion-inner { padding: 18px; }
+
+    /* ============================================================
+       TABLES
+    ============================================================ */
+    .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 480px; }
+    thead tr { background: var(--green-dark); color: var(--white); }
+    thead th { padding: 11px 14px; text-align: left; font-weight: 700; }
+    tbody tr:nth-child(even) { background: var(--green-xlight); }
+    tbody tr:hover { background: #dcedc8; }
+    tbody td { padding: 9px 14px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+
+    /* ============================================================
+       BADGES
+    ============================================================ */
+    .badge {
+      display: inline-block; border-radius: 20px;
+      padding: 2px 10px; font-size: 0.70rem; font-weight: 700;
+    }
+    .badge-green  { background: var(--green-xlight); color: var(--green-dark); }
+    .badge-amber  { background: #FFF8E1; color: #E65100; }
+    .badge-red    { background: var(--red-light); color: var(--red); }
+    .badge-blue   { background: var(--blue-light); color: var(--blue-dark); }
+    .est-tag {
+      background: #FFF9C4; color: #827717;
+      border-radius: 4px; padding: 1px 6px;
+      font-size: 0.68rem; font-weight: 700;
+    }
+
+    /* ============================================================
+       BIOME GRID
+    ============================================================ */
+    .biome-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .biome-card {
+      border-radius: 10px; padding: 16px;
+      text-align: center; border: 2px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition);
+      cursor: default;
+    }
+    .biome-card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.13); }
+    .biome-card .biome-emoji { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .biome-card h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+    .biome-card p  { font-size: 0.72rem; opacity: .8; }
+    .b-amazonia  { background: #E8F5E9; border-color: #2E7D32; color: #1B5E20; }
+    .b-cerrado   { background: #FFF8E1; border-color: #F9A825; color: #E65100; }
+    .b-mata      { background: #F1F8E9; border-color: #558B2F; color: #33691E; }
+    .b-caatinga  { background: #FBE9E7; border-color: #BF360C; color: #BF360C; }
+    .b-pampa     { background: #F9FBE7; border-color: #827717; color: #827717; }
+    .b-pantanal  { background: #E1F5FE; border-color: #0277BD; color: #01579B; }
+    .b-costeiro  { background: #E0F7FA; border-color: #00838F; color: #006064; }
+
+    /* ============================================================
+       INSTITUTIONAL GRID (Seção Parceiros)
+    ============================================================ */
+    .inst-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+    .inst-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.10);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .inst-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .inst-card-header {
+      padding: 16px 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .inst-card-header .ic-emoji { font-size: 1.8rem; flex-shrink: 0; }
+    .inst-card-header .ic-label {
+      font-size: 0.65rem; font-weight: 700;
+      color: rgba(255,255,255,0.78); letter-spacing: 1.2px;
+      text-transform: uppercase; margin-bottom: 2px;
+    }
+    .inst-card-header .ic-title {
+      font-size: 0.95rem; font-weight: 900;
+      color: var(--white); line-height: 1.2;
+    }
+    .inst-card-body {
+      padding: 20px; flex: 1;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .inst-card-name {
+      font-size: 0.88rem; font-weight: 700; margin: 0;
+    }
+    .inst-card-desc {
+      font-size: 0.82rem; color: #424242;
+      line-height: 1.65; margin: 0; flex: 1;
+    }
+    .inst-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .inst-tag {
+      border-radius: 20px; padding: 3px 10px;
+      font-size: 0.70rem; font-weight: 700;
+    }
+    .inst-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      text-decoration: none; padding: 10px 18px;
+      border-radius: 8px; font-size: 0.82rem; font-weight: 700;
+      width: fit-content; margin-top: auto;
+      transition: opacity var(--transition);
+      color: var(--white);
+    }
+    .inst-cta:hover { opacity: 0.85; }
+
+    /* Sub-cards parceiros (Card 4) */
+    .partner-sub {
+      border-radius: 8px; padding: 14px 16px;
+    }
+    .partner-sub-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .partner-sub-name {
+      font-size: 0.78rem; font-weight: 900; margin: 0 0 3px 0;
+    }
+    .partner-sub-role {
+      font-size: 0.74rem; margin: 0;
+    }
+    .partner-link {
+      text-decoration: none; border-radius: 6px;
+      padding: 6px 12px; font-size: 0.72rem;
+      font-weight: 700; white-space: nowrap;
+      color: var(--white);
+      transition: opacity var(--transition);
+    }
+    .partner-link:hover { opacity: 0.82; }
+
+    /* Aviso destacado */
+    .inst-notice {
+      background: linear-gradient(135deg, var(--green-xlight), #F1F8E9);
+      border: 2px solid var(--green-mid);
+      border-radius: 10px; padding: 18px 22px;
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 28px;
+    }
+    .inst-notice-icon { font-size: 2rem; flex-shrink: 0; }
+    .inst-notice-title {
+      font-weight: 700; color: var(--green-dark);
+      font-size: 0.97rem; margin-bottom: 4px;
+    }
+    .inst-notice-sub {
+      font-size: 0.80rem; color: var(--green-mid); margin: 0;
+    }
+
+    /* Banner final institucional */
+    .inst-footer-banner {
+      background: linear-gradient(135deg, var(--green-dark), var(--green-mid));
+      border-radius: 10px; padding: 20px 24px;
+      margin-top: 28px;
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .inst-footer-banner p { margin: 0; }
+    .inst-footer-title {
+      font-weight: 800; color: var(--white);
+      font-size: 0.92rem; margin-bottom: 4px !important;
+    }
+    .inst-footer-desc {
+      font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.6;
+    }
+
+    /* ============================================================
+       RISK MATRIX
+    ============================================================ */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .risk-card {
+      border-radius: 10px; padding: 16px;
+      border-left: 5px solid transparent;
+    }
+    .risk-alto   { background: var(--red-light);   border-color: var(--red); }
+    .risk-medio  { background: #FFF8E1;             border-color: var(--amber); }
+    .risk-baixo  { background: var(--green-xlight); border-color: var(--green-mid); }
+    .risk-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 6px; }
+    .risk-card p  { font-size: 0.78rem; line-height: 1.6; }
+
+    /* ============================================================
+       PROGRESS BARS
+    ============================================================ */
+    .progress-wrap { margin-bottom: 12px; }
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 0.78rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .progress-bar {
+      height: 10px; background: #e0e0e0;
+      border-radius: 10px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 10px;
+      background: linear-gradient(90deg, var(--green-dark), var(--green-mid));
+      transition: width 1s ease;
+    }
+
+    /* ============================================================
+       STANDARDS CARDS
+    ============================================================ */
+    .standard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .standard-card {
+      background: var(--green-xlight);
+      border-radius: 10px; padding: 18px;
+      border-top: 4px solid var(--green-dark);
+      transition: transform var(--transition);
+    }
+    .standard-card:hover { transform: translateY(-3px); }
+    .standard-card h4 {
+      font-size: 0.88rem; font-weight: 800;
+      color: var(--green-dark); margin-bottom: 6px;
+    }
+    .standard-card p { font-size: 0.78rem; color: #424242; line-height: 1.6; }
+
+    /* ============================================================
+       MILESTONES / TIMELINE
+    ============================================================ */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 3px; background: var(--green-light);
+      border-radius: 3px;
+    }
+    .tl-item { position: relative; margin-bottom: 20px; }
+    .tl-item::before {
+      content: '';
+      position: absolute; left: -24px; top: 4px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--green-dark);
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--green-mid);
+    }
+    .tl-year {
+      font-size: 0.72rem; font-weight: 800;
+      color: var(--green-dark); text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 3px;
+    }
+    .tl-desc { font-size: 0.82rem; color: #424242; line-height: 1.6; }
+
+    /* ============================================================
+       INFO BOXES
+    ============================================================ */
+    .info-box {
+      border-radius: 8px; padding: 14px 18px;
+      margin: 14px 0; border-left: 5px solid;
+      font-size: 0.83rem; line-height: 1.65;
+    }
+    .info-box-green  { background: var(--green-xlight); border-color: var(--green-dark); color: var(--green-dark); }
+    .info-box-blue   { background: var(--blue-light);   border-color: var(--blue-dark);  color: var(--blue-dark); }
+    .info-box-amber  { background: #FFF8E1;             border-color: var(--amber);      color: #E65100; }
+    .info-box-red    { background: var(--red-light);    border-color: var(--red);        color: var(--red); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--green-dark);
+      color: rgba(255,255,255,0.88);
+      text-align: center; padding: 22px 28px;
+      font-size: 0.78rem; line-height: 1.7;
+      margin-left: var(--sidebar-w);
+    }
+
+    /* ============================================================
+       BACK TO TOP
+    ============================================================ */
+    #back-top {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--green-dark); color: var(--white);
+      border: none; border-radius: 50%;
+      width: 44px; height: 44px; font-size: 1rem;
+      cursor: pointer; z-index: 999;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    #back-top.visible { opacity: 1; pointer-events: auto; }
+    #back-top:hover { transform: translateY(-3px); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      #sidebar-toggle { display: block; }
+      aside#sidebar {
+        transform: translateX(-100%);
+      }
+      aside#sidebar.open { transform: translateX(0); }
+      main { margin-left: 0; padding: 24px 18px 48px; }
+      footer { margin-left: 0; }
+      .intro-section { padding: 24px 20px; }
+      .section-body { padding: 20px; }
+    }
+    @media (max-width: 600px) {
+      header { padding: 0 14px; }
+      .header-titles h1 { font-size: 0.88rem; }
+      .version-badge { display: none; }
+      .inst-grid { grid-template-columns: 1fr; }
+      .biome-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    }
+
+    /* ============================================================
+       PRINT
+    ============================================================ */
+    @media print {
+      header, aside#sidebar, #back-top, #lang-btn { display: none !important; }
+      main { margin-left: 0 !important; padding: 0 !important; }
+      footer { margin-left: 0 !important; }
+      .doc-section { box-shadow: none !important; border: 1px solid #ccc; }
+      .accordion-content { max-height: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header role="banner">
+  <div class="header-brand">
+    <button id="sidebar-toggle" aria-label="Abrir menu lateral" aria-expanded="false">☰</button>
+    <div class="header-logo">GC</div>
+    <div class="header-titles">
+      <h1 data-pt="Plano de Manejo Regenerativo — PMR"
+          data-en="Regenerative Management Plan — RMP">
+        Plano de Manejo Regenerativo — PMR
+      </h1>
+      <p data-pt="Green Credit Ecosystems · Biodiversity Group (BGL) · Versão 1.0 · Junho 2026"
+         data-en="Green Credit Ecosystems · Biodiversity Group (BGL) · Version 1.0 · June 2026">
+        Green Credit Ecosystems · Biodiversity Group (BGL) · Versão 1.0 · Junho 2026
+      </p>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="version-badge">v1.0 · 2026</span>
+    <button id="lang-btn" onclick="toggleLang()" aria-label="Switch language / Trocar idioma">
+      <span class="flag" id="lang-flag">🇬🇧</span>
+      <span id="lang-label">English</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
+     LAYOUT
+============================================================ -->
+<div class="layout">
+
+  <!-- ════════════════════════════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════════════════════════════ -->
+  <aside id="sidebar" role="navigation" aria-label="Navegação do documento">
+    <div class="sidebar-header"
+         data-pt="📋 NAVEGAÇÃO" data-en="📋 NAVIGATION">📋 NAVEGAÇÃO</div>
+    <nav>
+      <ul>
+        <li>
+          <a href="#intro" class="nav-link">
+            <span class="nav-icon">🌎</span>
+            <span data-pt="Introdução" data-en="Introduction">Introdução</span>
+          </a>
+        </li>
+        <li>
+          <a href="#institucional" class="nav-link">
+            <span class="nav-icon">🏛️</span>
+            <span data-pt="Parceiros Institucionais" data-en="Institutional Partners">Parceiros Institucionais</span>
+          </a>
+        </li>
+        <div class="sidebar-divider"></div>
+        <li>
+          <a href="#s1" class="nav-link">
+            <span class="nav-icon">🔬</span>
+            <span data-pt="1. Diagnóstico Rural" data-en="1. Rural Diagnosis">1. Diagnóstico Rural</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s2" class="nav-link">
+            <span class="nav-icon">🗺️</span>
+            <span data-pt="2. Zoneamento Ambiental" data-en="2. Environmental Zoning">2. Zoneamento Ambiental</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s3" class="nav-link">
+            <span class="nav-icon">🌱</span>
+            <span data-pt="3. Protocolo Regenerativo" data-en="3. Regenerative Protocol">3. Protocolo Regenerativo</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s4" class="nav-link">
+            <span class="nav-icon">📊</span>
+            <span data-pt="4. Indicadores MRV" data-en="4. MRV Indicators">4. Indicadores MRV</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s5" class="nav-link">
+            <span class="nav-icon">🎯</span>
+            <span data-pt="5. Metas e Milestones" data-en="5. Goals &amp; Milestones">5. Metas e Milestones</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s6" class="nav-link">
+            <span class="nav-icon">🤝</span>
+            <span data-pt="6. Engajamento FPIC" data-en="6. FPIC Engagement">6. Engajamento FPIC</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s7" class="nav-link">
+            <span class="nav-icon">⚠️</span>
+            <span data-pt="7. Riscos" data-en="7. Risks">7. Riscos</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s8" class="nav-link">
+            <span class="nav-icon">🌍</span>
+            <span data-pt="8. Standards Verra" data-en="8. Verra Standards">8. Standards Verra</span>
+          </a>
+        </li>
+        <li>
+          <a href="#s9" class="nav-link">
+            <span class="nav-icon">📚</span>
+            <span data-pt="9. Referências" data-en="9. References">9. Referências</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN
+  ════════════════════════════════════════════════════════════ -->
+  <main role="main" id="main-content">
+
+    <!-- ── INTRO ─────────────────────────────────────────────── -->
+    <section class="intro-section" id="intro">
+      <h2 data-pt="🌿 Plano de Manejo Regenerativo (PMR)"
+          data-en="🌿 Regenerative Management Plan (RMP)">
+        🌿 Plano de Manejo Regenerativo (PMR)
+      </h2>
+      <p data-pt="Instrumento técnico central para Pagamento por Serviços Ambientais (PSA) e créditos de biodiversidade em propriedades rurais brasileiras, com interface ao mercado de carbono regulado e voluntário."
+         data-en="Central technical instrument for Payment for Environmental Services (PES) and biodiversity credits in Brazilian rural properties, with interface to regulated and voluntary carbon markets.">
+        Instrumento técnico central para Pagamento por Serviços Ambientais (PSA) e créditos de biodiversidade em propriedades rurais brasileiras, com interface ao mercado de carbono regulado e voluntário.
+      </p>
+      <p data-pt="O cenário global é crítico: o IPCC AR6 (2023) confirma que sem ações imediatas de mitigação e adaptação, o aquecimento médio global ultrapassará 1,5°C até 2035. O Brasil, detentor de cerca de 12% da biodiversidade mundial e 60% da Floresta Amazônica, ocupa posição estratégica nesse contexto. A NDC brasileira revisada (2023) prevê redução de 50% das emissões até 2030, com neutralidade climática até 2050. O manejo regenerativo da terra é vetor fundamental para alcançar essas metas, especialmente no setor agropecuário, responsável por aproximadamente 27% das emissões nacionais (SEEG/OC, 2023)."
+         data-en="The global scenario is critical: IPCC AR6 (2023) confirms that without immediate mitigation and adaptation actions, average global warming will exceed 1.5°C by 2035. Brazil, holding approximately 12% of global biodiversity and 60% of the Amazon rainforest, occupies a strategic position in this context. The revised Brazilian NDC (2023) projects a 50% reduction in emissions by 2030, with climate neutrality by 2050. Regenerative land management is a fundamental vector to achieve these goals, especially in the agricultural sector, responsible for approximately 27% of national emissions (SEEG/OC, 2023).">
+        O cenário global é crítico: o IPCC AR6 (2023) confirma que sem ações imediatas de mitigação e adaptação, o aquecimento médio global ultrapassará 1,5°C até 2035. O Brasil, detentor de cerca de 12% da biodiversidade mundial e 60% da Floresta Amazônica, ocupa posição estratégica nesse contexto. A NDC brasileira revisada (2023) prevê redução de 50% das emissões até 2030, com neutralidade climática até 2050. O manejo regenerativo da terra é vetor fundamental para alcançar essas metas, especialmente no setor agropecuário, responsável por aproximadamente 27% das emissões nacionais (SEEG/OC, 2023).
+      </p>
+      <div class="intro-badges">
+        <span class="intro-badge">🌳 7 Biomas Brasileiros</span>
+        <span class="intro-badge">📋 VM0048 · VM0042 · CCB</span>
+        <span class="intro-badge">⚖️ Lei 12.651/2012</span>
+        <span class="intro-badge">🌡️ NDC Brasil 2023</span>
+        <span class="intro-badge">💰 PSA · Créditos de Carbono</span>
+        <span class="intro-badge">🔬 MRV Integrado</span>
+        <span class="intro-badge">🤝 FPIC · ATER</span>
+        <span class="intro-badge">🌐 Artigo 6 — Acordo de Paris</span>
+      </div>
+    </section>
+
+    <!-- ── BIOMAS ─────────────────────────────────────────────── -->
+    <div class="doc-section">
+      <div class="section-header">
+        <span class="sec-icon">🗺️</span>
+        <h2 data-pt="Os Sete Biomas Brasileiros — Escopo de Cobertura"
+            data-en="The Seven Brazilian Biomes — Coverage Scope">
+          Os Sete Biomas Brasileiros — Escopo de Cobertura
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="biome-grid">
+          <div class="biome-card b-amazonia">
+            <span class="biome-emoji">🌳</span>
+            <h4 data-pt="Amazônia" data-en="Amazon">Amazônia</h4>
+            <p data-pt="≈4,2 mi km² · RL 80%" data-en="≈4.2M km² · RL 80%">≈4,2 mi km² · RL 80%</p>
+          </div>
+          <div class="biome-card b-cerrado">
+            <span class="biome-emoji">🌾</span>
+            <h4 data-pt="Cerrado" data-en="Cerrado (Savanna)">Cerrado</h4>
+            <p data-pt="≈2,0 mi km² · RL 20-35%" data-en="≈2.0M km² · RL 20-35%">≈2,0 mi km² · RL 20-35%</p>
+          </div>
+          <div class="biome-card b-mata">
+            <span class="biome-emoji">🌿</span>
+            <h4 data-pt="Mata Atlântica" data-en="Atlantic Forest">Mata Atlântica</h4>
+            <p data-pt="≈1,1 mi km² · RL 20%" data-en="≈1.1M km² · RL 20%">≈1,1 mi km² · RL 20%</p>
+          </div>
+          <div class="biome-card b-caatinga">
+            <span class="biome-emoji">🌵</span>
+            <h4>Caatinga</h4>
+            <p data-pt="≈840 mil km² · RL 20%" data-en="≈840K km² · RL 20%">≈840 mil km² · RL 20%</p>
+          </div>
+          <div class="biome-card b-pampa">
+            <span class="biome-emoji">🐄</span>
+            <h4>Pampa</h4>
+            <p data-pt="≈177 mil km² · RL 20%" data-en="≈177K km² · RL 20%">≈177 mil km² · RL 20%</p>
+          </div>
+          <div class="biome-card b-pantanal">
+            <span class="biome-emoji">🐊</span>
+            <h4>Pantanal</h4>
+            <p data-pt="≈150 mil km² · RL 20%" data-en="≈150K km² · RL 20%">≈150 mil km² · RL 20%</p>
+          </div>
+          <div class="biome-card b-costeiro">
+            <span class="biome-emoji">🌊</span>
+            <h4 data-pt="Costeiro/Marinho" data-en="Coastal/Marine">Costeiro/Marinho</h4>
+            <p data-pt="≈514 mil km² · Zona Costeira" data-en="≈514K km² · Coastal Zone">≈514 mil km² · Zona Costeira</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO INSTITUCIONAL
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="institucional">
+      <div class="section-header" style="background: linear-gradient(90deg, #0D3B0E, #1B5E20);">
+        <span class="sec-icon">🏛️</span>
+        <h2 data-pt="Ecossistema Institucional — Plataformas, Parceiros e Responsáveis Técnicos"
+            data-en="Institutional Ecosystem — Platforms, Partners and Technical Responsible">
+          Ecossistema Institucional — Plataformas, Parceiros e Responsáveis Técnicos
+        </h2>
+      </div>
+      <div class="section-body">
+
+        <!-- Aviso -->
+        <div class="inst-notice">
+          <span class="inst-notice-icon">🤝</span>
+          <div>
+            <p class="inst-notice-title"
+               data-pt="Este PMR é desenvolvido e operado por um ecossistema de organizações especializadas em carbono, biodiversidade e finanças sustentáveis, conforme detalhado abaixo."
+               data-en="This RMP is developed and operated by an ecosystem of organizations specializing in carbon, biodiversity and sustainable finance, as detailed below.">
+              Este PMR é desenvolvido e operado por um ecossistema de organizações especializadas em carbono, biodiversidade e finanças sustentáveis, conforme detalhado abaixo.
+            </p>
+            <p class="inst-notice-sub"
+               data-pt="Cada instituição possui papel técnico, científico ou estratégico claramente definido no âmbito do projeto."
+               data-en="Each institution has a clearly defined technical, scientific or strategic role within the project scope.">
+              Cada instituição possui papel técnico, científico ou estratégico claramente definido no âmbito do projeto.
+            </p>
+          </div>
+        </div>
+
+        <!-- GRID 4 CARDS -->
+        <div class="inst-grid">
+
+          <!-- CARD 1 — MRV / IBEDIS -->
+          <div class="inst-card" style="border-left: 6px solid #1565C0;">
+            <div class="inst-card-header" style="background: linear-gradient(135deg,#1565C0,#1976D2);">
+              <span class="ic-emoji">📡</span>
+              <div>
+                <div class="ic-label"
+                     data-pt="PLATAFORMA OFICIAL DE MRV"
+                     data-en="OFFICIAL MRV PLATFORM">PLATAFORMA OFICIAL DE MRV</div>
+                <div class="ic-title">dMRV · IBEDIS</div>
+              </div>
+            </div>
+            <div class="inst-card-body">
+              <p class="inst-card-name" style="color:#1565C0;"
+                 data-pt="Plataforma dMRV, e-CPR Verde &amp; Créditos de Carbono | IBEDIS"
+                 data-en="Platform dMRV, e-CPR Verde &amp; Carbon Credits | IBEDIS">
+                Plataforma dMRV, e-CPR Verde &amp; Créditos de Carbono | IBEDIS
+              </p>
+              <p class="inst-card-desc"
+                 data-pt="Todo o processo de &lt;strong&gt;Monitoramento, Reporte e Verificação (MRV)&lt;/strong&gt; deste projeto é executado por meio da plataforma digital &lt;strong&gt;IBEDIS&lt;/strong&gt;, que integra o protocolo eletrônico &lt;strong&gt;e-CPR Verde&lt;/strong&gt; e a gestão de &lt;strong&gt;Créditos de Carbono&lt;/strong&gt; em conformidade com os padrões internacionais Verra e IPCC."
+                 data-en="The entire &lt;strong&gt;Monitoring, Reporting and Verification (MRV)&lt;/strong&gt; process is executed through the &lt;strong&gt;IBEDIS&lt;/strong&gt; digital platform, integrating the &lt;strong&gt;e-CPR Verde&lt;/strong&gt; electronic protocol and &lt;strong&gt;Carbon Credit&lt;/strong&gt; management in compliance with international Verra and IPCC standards.">
+                Todo o processo de <strong>Monitoramento, Reporte e Verificação (MRV)</strong> deste projeto é executado por meio da plataforma digital <strong>IBEDIS</strong>, que integra o protocolo eletrônico <strong>e-CPR Verde</strong> e a gestão de <strong>Créditos de Carbono</strong> em conformidade com os padrões internacionais Verra e IPCC.
+              </p>
+              <div class="inst-tags">
+                <span class="inst-tag" style="background:#E3F2FD;color:#0D47A1;">📊 Monitoramento Digital</span>
+                <span class="inst-tag" style="background:#E3F2FD;color:#0D47A1;">📝 e-CPR Verde</span>
+                <span class="inst-tag" style="background:#E3F2FD;color:#0D47A1;">💳 Créditos de Carbono</span>
+                <span class="inst-tag" style="background:#E3F2FD;color:#0D47A1;">✅ Verra-Compliant</span>
+              </div>
+              <a class="inst-cta" href="https://mrv.ibedis.org/"
+                 target="_blank" rel="noopener noreferrer"
+                 style="background:#1565C0;">
+                🔗 <span data-pt="Acessar Plataforma IBEDIS"
+                         data-en="Access IBEDIS Platform">Acessar Plataforma IBEDIS</span> ↗
+              </a>
+            </div>
+          </div>
+          <!-- /CARD 1 -->
+
+          <!-- CARD 2 — OBSERVA.BIO -->
+          <div class="inst-card" style="border-left: 6px solid #2E7D32;">
+            <div class="inst-card-header" style="background: linear-gradient(135deg,#1B5E20,#2E7D32);">
+              <span class="ic-emoji">🔭</span>
+              <div>
+                <div class="ic-label"
+                     data-pt="ACOMPANHAMENTO CIENTÍFICO"
+                     data-en="SCIENTIFIC MONITORING">ACOMPANHAMENTO CIENTÍFICO</div>
+                <div class="ic-title">Observa.Bio</div>
+              </div>
+            </div>
+            <div class="inst-card-body">
+              <p class="inst-card-name" style="color:#1B5E20;"
+                 data-pt="Observa.Bio — Observatório de Biodiversidade do Brasil"
+                 data-en="Observa.Bio — Observatory of Biodiversity of Brazil">
+                Observa.Bio — Observatório de Biodiversidade do Brasil
+              </p>
+              <p class="inst-card-desc"
+                 data-pt="Todos os projetos integrantes deste PMR são &lt;strong&gt;estudados, acompanhados e validados cientificamente&lt;/strong&gt; pelo &lt;strong&gt;Observa.Bio — Observatório de Biodiversidade do Brasil&lt;/strong&gt;. O Observatório realiza análise independente dos indicadores de biodiversidade, conectividade de habitat e integridade ecológica dos biomas envolvidos."
+                 data-en="All projects within this RMP are &lt;strong&gt;scientifically studied, monitored and validated&lt;/strong&gt; by &lt;strong&gt;Observa.Bio — Observatory of Biodiversity of Brazil&lt;/strong&gt;. The Observatory performs independent analysis of biodiversity indicators, habitat connectivity and ecological integrity of the biomes involved.">
+                Todos os projetos integrantes deste PMR são <strong>estudados, acompanhados e validados cientificamente</strong> pelo <strong>Observa.Bio — Observatório de Biodiversidade do Brasil</strong>. O Observatório realiza análise independente dos indicadores de biodiversidade, conectividade de habitat e integridade ecológica dos biomas envolvidos.
+              </p>
+              <div class="inst-tags">
+                <span class="inst-tag" style="background:#E8F5E9;color:#1B5E20;">🔬 Análise Científica</span>
+                <span class="inst-tag" style="background:#E8F5E9;color:#1B5E20;">🦋 Biodiversidade</span>
+                <span class="inst-tag" style="background:#E8F5E9;color:#1B5E20;">🌿 Integridade Ecológica</span>
+                <span class="inst-tag" style="background:#E8F5E9;color:#1B5E20;">📡 Monitoramento Contínuo</span>
+              </div>
+              <a class="inst-cta" href="https://observa.bio/"
+                 target="_blank" rel="noopener noreferrer"
+                 style="background:#2E7D32;">
+                🔗 <span data-pt="Acessar Observa.Bio"
+                         data-en="Access Observa.Bio">Acessar Observa.Bio</span> ↗
+              </a>
+            </div>
+          </div>
+          <!-- /CARD 2 -->
+
+          <!-- CARD 3 — BRASIL CARBONO -->
+          <div class="inst-card" style="border-left: 6px solid #E65100;">
+            <div class="inst-card-header" style="background: linear-gradient(135deg,#BF360C,#E64A19);">
+              <span class="ic-emoji">🌲</span>
+              <div>
+                <div class="ic-label"
+                     data-pt="RESPONSÁVEL TÉCNICO"
+                     data-en="TECHNICAL RESPONSIBLE">RESPONSÁVEL TÉCNICO</div>
+                <div class="ic-title">Brasil Carbono</div>
+              </div>
+            </div>
+            <div class="inst-card-body">
+              <p class="inst-card-name" style="color:#BF360C;"
+                 data-pt="Brasil Carbono Florestal · Marca: Brasil Carbono"
+                 data-en="Brasil Carbono Florestal · Brand: Brasil Carbono">
+                Brasil Carbono Florestal · Marca: <strong>Brasil Carbono</strong>
+              </p>
+              <p class="inst-card-desc"
+                 data-pt="O desenvolvimento técnico completo deste PMR — incluindo metodologia, modelagem de carbono, inventários florestais, análise de solo e estruturação dos projetos Verra — é realizado pela &lt;strong&gt;Brasil Carbono Florestal&lt;/strong&gt;, operando sob a marca comercial &lt;strong&gt;Brasil Carbono&lt;/strong&gt;. Referência nacional em projetos de carbono florestal e REDD+."
+                 data-en="The complete technical development of this RMP — including methodology, carbon modeling, forest inventories, soil analysis and Verra project structuring — is carried out by &lt;strong&gt;Brasil Carbono Florestal&lt;/strong&gt;, operating under the brand &lt;strong&gt;Brasil Carbono&lt;/strong&gt;. National reference in forest carbon and REDD+ projects.">
+                O desenvolvimento técnico completo deste PMR — incluindo metodologia, modelagem de carbono, inventários florestais, análise de solo e estruturação dos projetos Verra — é realizado pela <strong>Brasil Carbono Florestal</strong>, operando sob a marca comercial <strong>Brasil Carbono</strong>. Referência nacional em projetos de carbono florestal e REDD+.
+              </p>
+              <div class="inst-tags">
+                <span class="inst-tag" style="background:#FBE9E7;color:#BF360C;">🌳 Carbono Florestal</span>
+                <span class="inst-tag" style="background:#FBE9E7;color:#BF360C;">📐 Metodologia Verra</span>
+                <span class="inst-tag" style="background:#FBE9E7;color:#BF360C;">🔬 Inventário Florestal</span>
+                <span class="inst-tag" style="background:#FBE9E7;color:#BF360C;">🇧🇷 REDD+</span>
+              </div>
+              <a class="inst-cta" href="https://www.brcarbono.com.br/"
+                 target="_blank" rel="noopener noreferrer"
+                 style="background:#E64A19;">
+                🔗 <span data-pt="Acessar Brasil Carbono"
+                         data-en="Access Brasil Carbono">Acessar Brasil Carbono</span> ↗
+              </a>
+            </div>
+          </div>
+          <!-- /CARD 3 -->
+
+          <!-- CARD 4 — PARCEIROS PROMOTORES -->
+          <div class="inst-card" style="border-left: 6px solid #6A1B9A;">
+            <div class="inst-card-header" style="background: linear-gradient(135deg,#4A148C,#6A1B9A);">
+              <span class="ic-emoji">🌐</span>
+              <div>
+                <div class="ic-label"
+                     data-pt="INICIATIVA E PARCEIROS PROMOTORES"
+                     data-en="INITIATIVE AND PROMOTING PARTNERS">INICIATIVA E PARCEIROS PROMOTORES</div>
+                <div class="ic-title"
+                     data-pt="BGL · Green Credit · CC Ventures"
+                     data-en="BGL · Green Credit · CC Ventures">BGL · Green Credit · CC Ventures</div>
+              </div>
+            </div>
+            <div class="inst-card-body">
+              <p class="inst-card-desc"
+                 data-pt="Esta iniciativa é promovida por um consórcio internacional de três organizações complementares, unindo expertise global em biodiversidade, mercado de carbono e finanças climáticas:"
+                 data-en="This initiative is promoted by an international consortium of three complementary organizations, combining global expertise in biodiversity, carbon market and climate finance:">
+                Esta iniciativa é promovida por um consórcio internacional de três organizações complementares, unindo expertise global em biodiversidade, mercado de carbono e finanças climáticas:
+              </p>
+
+              <!-- Sub-card BGL -->
+              <div class="partner-sub" style="background:#F3E5F5; border-left: 4px solid #6A1B9A;">
+                <div class="partner-sub-inner">
+                  <div>
+                    <p class="partner-sub-name" style="color:#4A148C;">🇬🇧 BGL — Biodiversity Group</p>
+                    <p class="partner-sub-role" style="color:#6A1B9A;"
+                       data-pt="Promotor principal · Reino Unido"
+                       data-en="Lead promoter · United Kingdom">
+                      Promotor principal · Reino Unido
+                    </p>
+                  </div>
+                  <a class="partner-link" href="https://biodiversitygroup.co.uk/"
+                     target="_blank" rel="noopener noreferrer"
+                     style="background:#6A1B9A;">
+                    🔗 biodiversitygroup.co.uk ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sub-card Green Credit -->
+              <div class="partner-sub" style="background:#E8F5E9; border-left: 4px solid #2E7D32;">
+                <div class="partner-sub-inner">
+                  <div>
+                    <p class="partner-sub-name" style="color:#1B5E20;">🇧🇷 Green Credit Ecosystems</p>
+                    <p class="partner-sub-role" style="color:#2E7D32;"
+                       data-pt="Parceira operacional · Brasil"
+                       data-en="Operational partner · Brazil">
+                      Parceira operacional · Brasil
+                    </p>
+                  </div>
+                  <a class="partner-link" href="https://greencredit.agr.br/"
+                     target="_blank" rel="noopener noreferrer"
+                     style="background:#2E7D32;">
+                    🔗 greencredit.agr.br ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- Sub-card CC Ventures -->
+              <div class="partner-sub" style="background:#E3F2FD; border-left: 4px solid #1565C0;">
+                <div class="partner-sub-inner">
+                  <div>
+                    <p class="partner-sub-name" style="color:#0D47A1;">🇪🇺 Climate Change Ventures</p>
+                    <p class="partner-sub-role" style="color:#1565C0;"
+                       data-pt="Parceira estratégica · Europa"
+                       data-en="Strategic partner · Europe">
+                      Parceira estratégica · Europa
+                    </p>
+                  </div>
+                  <a class="partner-link" href="https://ccventures.io/"
+                     target="_blank" rel="noopener noreferrer"
+                     style="background:#1565C0;">
+                    🔗 ccventures.io ↗
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- /CARD 4 -->
+
+        </div>
+        <!-- /inst-grid -->
+
+        <!-- TABELA RESUMO -->
+        <h3 style="font-size:0.97rem;font-weight:700;color:var(--green-dark);
+                   border-left:4px solid var(--green-mid);padding-left:12px;margin-bottom:14px;"
+            data-pt="📋 Resumo — Papéis e Responsabilidades Institucionais"
+            data-en="📋 Summary — Institutional Roles and Responsibilities">
+          📋 Resumo — Papéis e Responsabilidades Institucionais
+        </h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-pt="Instituição"     data-en="Institution">Instituição</th>
+                <th data-pt="Papel no PMR"    data-en="Role in RMP">Papel no PMR</th>
+                <th data-pt="Escopo"          data-en="Scope">Escopo</th>
+                <th>Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:#E3F2FD;">
+                <td><strong style="color:#1565C0;">dMRV / IBEDIS</strong></td>
+                <td data-pt="Plataforma Oficial de MRV" data-en="Official MRV Platform">Plataforma Oficial de MRV</td>
+                <td data-pt="Monitoramento, e-CPR Verde, emissão de créditos" data-en="Monitoring, e-CPR Verde, credit issuance">Monitoramento, e-CPR, créditos</td>
+                <td><a href="https://mrv.ibedis.org/" target="_blank" rel="noopener noreferrer"
+                       style="color:#1565C0;font-weight:700;text-decoration:none;">mrv.ibedis.org ↗</a></td>
+              </tr>
+              <tr style="background:#E8F5E9;">
+                <td><strong style="color:#1B5E20;">Observa.Bio</strong></td>
+                <td data-pt="Observatório de Biodiversidade" data-en="Biodiversity Observatory">Observatório de Biodiversidade</td>
+                <td data-pt="Ciência, indicadores, validação ecológica" data-en="Science, indicators, ecological validation">Ciência, indicadores, validação</td>
+                <td><a href="https://observa.bio/" target="_blank" rel="noopener noreferrer"
+                       style="color:#1B5E20;font-weight:700;text-decoration:none;">observa.bio ↗</a></td>
+              </tr>
+              <tr style="background:#FBE9E7;">
+                <td><strong style="color:#BF360C;">Brasil Carbono</strong></td>
+                <td data-pt="Responsável Técnico" data-en="Technical Responsible">Responsável Técnico</td>
+                <td data-pt="Metodologia, carbono, REDD+" data-en="Methodology, carbon, REDD+">Metodologia, carbono, REDD+</td>
+                <td><a href="https://www.brcarbono.com.br/" target="_blank" rel="noopener noreferrer"
+                       style="color:#BF360C;font-weight:700;text-decoration:none;">brcarbono.com.br ↗</a></td>
+              </tr>
+              <tr style="background:#F3E5F5;">
+                <td><strong style="color:#4A148C;">BGL</strong></td>
+                <td data-pt="Promotor Principal" data-en="Lead Promoter">Promotor Principal</td>
+                <td data-pt="Liderança estratégica global" data-en="Global strategic leadership">Liderança estratégica global</td>
+                <td><a href="https://biodiversitygroup.co.uk/" target="_blank" rel="noopener noreferrer"
+                       style="color:#4A148C;font-weight:700;text-decoration:none;">biodiversitygroup.co.uk ↗</a></td>
+              </tr>
+              <tr style="background:#E8F5E9;">
+                <td><strong style="color:#1B5E20;">Green Credit</strong></td>
+                <td data-pt="Parceira Operacional · Brasil" data-en="Operational Partner · Brazil">Parceira Operacional · Brasil</td>
+                <td data-pt="PSA, projetos e mercado no Brasil" data-en="PES, projects and market in Brazil">PSA, projetos e mercado BR</td>
+                <td><a href="https://greencredit.agr.br/" target="_blank" rel="noopener noreferrer"
+                       style="color:#1B5E20;font-weight:700;text-decoration:none;">greencredit.agr.br ↗</a></td>
+              </tr>
+              <tr>
+                <td><strong style="color:#0D47A1;">CC Ventures</strong></td>
+                <td data-pt="Parceira Estratégica · Europa" data-en="Strategic Partner · Europe">Parceira Estratégica · Europa</td>
+                <td data-pt="Mercados EU, investidores, finanças climáticas" data-en="EU markets, investors, climate finance">Mercados EU, investidores</td>
+                <td><a href="https://ccventures.io/" target="_blank" rel="noopener noreferrer"
+                       style="color:#0D47A1;font-weight:700;text-decoration:none;">ccventures.io ↗</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Banner Compromisso -->
+        <div class="inst-footer-banner">
+          <span style="font-size:1.8rem;flex-shrink:0;">✅</span>
+          <div>
+            <p class="inst-footer-title"
+               data-pt="Compromisso com Integridade e Transparência"
+               data-en="Commitment to Integrity and Transparency">
+              Compromisso com Integridade e Transparência
+            </p>
+            <p class="inst-footer-desc"
+               data-pt="Todas as instituições listadas operam em conformidade com os padrões internacionais de integridade ESG, alinhadas ao Acordo de Paris, às metodologias Verra (VM0048 e VM0042), aos Princípios Centrais de Carbono (ICVCM CCP) e aos Objetivos de Desenvolvimento Sustentável (ODS) da ONU."
+               data-en="All listed institutions operate in compliance with international ESG integrity standards, aligned with the Paris Agreement, Verra methodologies (VM0048 and VM0042), Core Carbon Principles (ICVCM CCP) and UN Sustainable Development Goals (SDGs).">
+              Todas as instituições operam em conformidade com os padrões internacionais ESG, alinhadas ao Acordo de Paris, metodologias Verra (VM0048/VM0042), ICVCM CCP e ODS da ONU.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /SEÇÃO INSTITUCIONAL -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 1 — DIAGNÓSTICO
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s1">
+      <div class="section-header">
+        <div class="sec-num">1</div>
+        <span class="sec-icon">🔬</span>
+        <h2 data-pt="Diagnóstico da Propriedade Rural"
+            data-en="Rural Property Diagnosis">Diagnóstico da Propriedade Rural</h2>
+      </div>
+      <div class="section-body">
+
+        <!-- 1.1 Solo -->
+        <div class="subsection">
+          <h3 data-pt="1.1 Solo — Análise Pedológica e de Qualidade"
+              data-en="1.1 Soil — Pedological and Quality Analysis">
+            1.1 Solo — Análise Pedológica e de Qualidade
+          </h3>
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span data-pt="🌱 Classificação e Fertilidade por Bioma"
+                  data-en="🌱 Classification and Fertility by Biome">
+              🌱 Classificação e Fertilidade por Bioma
+            </span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <p style="font-size:0.83rem;margin-bottom:12px;"
+                 data-pt="A classificação pedológica segue o Sistema Brasileiro de Classificação de Solos (SiBCS), desenvolvido e mantido pela Embrapa Solos. Os principais tipos encontrados nos biomas brasileiros são:"
+                 data-en="Pedological classification follows the Brazilian Soil Classification System (SiBCS), developed and maintained by Embrapa Solos. The main types found in Brazilian biomes are:">
+                A classificação pedológica segue o Sistema Brasileiro de Classificação de Solos (SiBCS), desenvolvido e mantido pela Embrapa Solos.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th data-pt="Bioma" data-en="Biome">Bioma</th>
+                      <th data-pt="Solos Predominantes (SiBCS)" data-en="Predominant Soils (SiBCS)">Solos Predominantes</th>
+                      <th data-pt="pH Médio" data-en="Average pH">pH Médio</th>
+                      <th data-pt="COS (tC/ha)" data-en="SOC (tC/ha)">COS (tC/ha)</th>
+                      <th data-pt="Fertilidade Natural" data-en="Natural Fertility">Fertilidade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>🌳 <strong data-pt="Amazônia" data-en="Amazon">Amazônia</strong></td>
+                      <td data-pt="Latossolo Amarelo, Argissolo, Plintossolo" data-en="Yellow Latosol, Argisol, Plinthosol">Latossolo Amarelo, Argissolo</td>
+                      <td>3,8–4,8</td>
+                      <td>25–60 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber" data-pt="Baixa" data-en="Low">Baixa</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌾 <strong>Cerrado</strong></td>
+                      <td data-pt="Latossolo Vermelho, Latossolo Vermelho-Amarelo" data-en="Red Latosol, Red-Yellow Latosol">Latossolo Vermelho, LVA</td>
+                      <td>4,5–6,0</td>
+                      <td>15–40 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber" data-pt="Baixa-Média" data-en="Low-Medium">Baixa-Média</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌿 <strong data-pt="Mata Atlântica" data-en="Atlantic Forest">Mata Atlântica</strong></td>
+                      <td data-pt="Argissolo, Cambissolo, Gleissolo" data-en="Argisol, Cambisol, Gleysol">Argissolo, Cambissolo</td>
+                      <td>4,5–6,5</td>
+                      <td>20–55 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-green" data-pt="Média-Alta" data-en="Medium-High">Média-Alta</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌵 <strong>Caatinga</strong></td>
+                      <td data-pt="Luvissolo, Neossolo Litólico, Planossolo" data-en="Luvisol, Litholic Neosol, Planosol">Luvissolo, Neossolo</td>
+                      <td>6,0–8,0</td>
+                      <td>8–22 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber" data-pt="Baixa" data-en="Low">Baixa</span></td>
+                    </tr>
+                    <tr>
+                      <td>🐄 <strong>Pampa</strong></td>
+                      <td data-pt="Argissolo, Neossolo Quartzarênico, Cambissolo" data-en="Argisol, Quartzarenic Neosol, Cambisol">Argissolo, Cambissolo</td>
+                      <td>5,0–6,5</td>
+                      <td>20–45 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-green" data-pt="Média" data-en="Medium">Média</span></td>
+                    </tr>
+                    <tr>
+                      <td>🐊 <strong>Pantanal</strong></td>
+                      <td data-pt="Gleissolo, Planossolo, Plintossolo" data-en="Gleysol, Planosol, Plinthosol">Gleissolo, Planossolo</td>
+                      <td>5,5–7,0</td>
+                      <td>20–50 <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-green" data-pt="Média" data-en="Medium">Média</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p style="font-size:0.72rem;color:#827717;margin-top:8px;">
+                <strong>[Estimativa Referenciada — Embrapa Solos / SiBCS / IPCC AR6 Tabelas de Fatores de Emissão]</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.2 Vegetação -->
+        <div class="subsection">
+          <h3 data-pt="1.2 Vegetação — Fitofisionomias e Estado de Conservação"
+              data-en="1.2 Vegetation — Phytophysiognomies and Conservation Status">
+            1.2 Vegetação — Fitofisionomias e Estado de Conservação
+          </h3>
+          <button class="accordion-btn" onclick="toggleAccordion(this)" aria-expanded="false">
+            <span data-pt="🌿 Fitofisionomias por Bioma e Indicadores Vegetais"
+                  data-en="🌿 Phytophysiognomies by Biome and Vegetation Indicators">
+              🌿 Fitofisionomias por Bioma e Indicadores Vegetais
+            </span>
+            <span class="acc-arrow">▼</span>
+          </button>
+          <div class="accordion-content">
+            <div class="accordion-inner">
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th data-pt="Bioma" data-en="Biome">Bioma</th>
+                      <th data-pt="Fitofisionomias Principais" data-en="Main Phytophysiognomies">Fitofisionomias</th>
+                      <th data-pt="Cobertura Vegetal Remanescente" data-en="Remaining Vegetation Cover">Remanescente</th>
+                      <th data-pt="Ameaça" data-en="Threat">Ameaça</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>🌳 Amazônia</td>
+                      <td data-pt="Floresta Ombrófila Densa, Aberta, Campinarana" data-en="Dense Ombrophilous Forest, Open, Campinarana">Floresta Ombrófila Densa/Aberta</td>
+                      <td>~80% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber">Alta</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌾 Cerrado</td>
+                      <td data-pt="Savana, Campo Cerrado, Vereda, Mata Ciliar" data-en="Savanna, Cerrado Field, Vereda, Riparian Forest">Savana, Campo, Vereda</td>
+                      <td>~48% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-red">Crítica</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌿 Mata Atlântica</td>
+                      <td data-pt="Floresta Ombrófila, Estacional, Restinga, Manguezal" data-en="Ombrophilous Forest, Seasonal, Restinga, Mangrove">Ombrófila, Restinga, Manguezal</td>
+                      <td>~12% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-red">Crítica</span></td>
+                    </tr>
+                    <tr>
+                      <td>🌵 Caatinga</td>
+                      <td data-pt="Caatinga Arbórea, Arbustiva, Carrasco" data-en="Arboreal Caatinga, Shrub, Carrasco">Arbórea, Arbustiva, Carrasco</td>
+                      <td>~53% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber">Alta</span></td>
+                    </tr>
+                    <tr>
+                      <td>🐄 Pampa</td>
+                      <td data-pt="Campo Nativo, Mata de Galeria, Banhado" data-en="Native Field, Gallery Forest, Wetland">Campo Nativo, Mata de Galeria</td>
+                      <td>~54% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-amber">Alta</span></td>
+                    </tr>
+                    <tr>
+                      <td>🐊 Pantanal</td>
+                      <td data-pt="Savana Inundável, Campo Limpo, Floresta de Galeria" data-en="Floodable Savanna, Open Field, Gallery Forest">Savana Inundável, Campo Limpo</td>
+                      <td>~83% <span class="est-tag">Est.</span></td>
+                      <td><span class="badge badge-green">Moderada</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1.3 Hidrologia -->
+        <div class="subsection">
+          <h3 data-pt="1.3 Hidrologia — Recursos Hídricos e Vulnerabilidade"
+              data-en="1.3 Hydrology — Water Resources and Vulnerability">
+            1.3 Hidrologia — Recursos Hídricos e Vulnerabilidade
+          </h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Bioma" data-en="Biome">Bioma</th>
+                  <th data-pt="Precipitação (mm/ano)" data-en="Rainfall (mm/year)">Precipitação (mm/ano)</th>
+                  <th data-pt="Balanço Hídrico" data-en="Water Balance">Balanço Hídrico</th>
+                  <th data-pt="Vulnerabilidade" data-en="Vulnerability">Vulnerabilidade</th>
+                  <th data-pt="APP Hídrica" data-en="Water APP">APP Hídrica</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>🌳 Amazônia</td>
+                  <td>1.800–3.500 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Superávit hídrico" data-en="Water surplus">Superávit hídrico</td>
+                  <td><span class="badge badge-amber" data-pt="Média" data-en="Medium">Média</span></td>
+                  <td>30–500m</td>
+                </tr>
+                <tr>
+                  <td>🌾 Cerrado</td>
+                  <td>750–2.000 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Sazonal — déficit no seco" data-en="Seasonal — deficit in dry season">Sazonal</td>
+                  <td><span class="badge badge-red" data-pt="Alta" data-en="High">Alta</span></td>
+                  <td>30–100m</td>
+                </tr>
+                <tr>
+                  <td>🌿 Mata Atlântica</td>
+                  <td>1.200–4.000 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Superávit a moderado" data-en="Surplus to moderate">Superávit a moderado</td>
+                  <td><span class="badge badge-amber" data-pt="Média" data-en="Medium">Média</span></td>
+                  <td>30–200m</td>
+                </tr>
+                <tr>
+                  <td>🌵 Caatinga</td>
+                  <td>250–800 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Déficit hídrico severo" data-en="Severe water deficit">Déficit severo</td>
+                  <td><span class="badge badge-red" data-pt="Muito Alta" data-en="Very High">Muito Alta</span></td>
+                  <td>30–100m</td>
+                </tr>
+                <tr>
+                  <td>🐄 Pampa</td>
+                  <td>1.200–1.800 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Equilibrado" data-en="Balanced">Equilibrado</td>
+                  <td><span class="badge badge-green" data-pt="Baixa" data-en="Low">Baixa</span></td>
+                  <td>30–100m</td>
+                </tr>
+                <tr>
+                  <td>🐊 Pantanal</td>
+                  <td>1.000–1.500 <span class="est-tag">Est.</span></td>
+                  <td data-pt="Pulso de inundação anual" data-en="Annual flood pulse">Pulso inundação</td>
+                  <td><span class="badge badge-amber" data-pt="Média-Alta" data-en="Medium-High">Média-Alta</span></td>
+                  <td>30–500m</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 1.4 CAR / Cadastro -->
+        <div class="subsection">
+          <h3 data-pt="1.4 Regularidade Fundiária e Ambiental — CAR e SICAR"
+              data-en="1.4 Land and Environmental Compliance — CAR and SICAR">
+            1.4 Regularidade Fundiária e Ambiental — CAR e SICAR
+          </h3>
+          <div class="info-box info-box-green">
+            <strong data-pt="Requisitos obrigatórios (Lei 12.651/2012 — Código Florestal):"
+                    data-en="Mandatory requirements (Law 12.651/2012 — Forest Code):">
+              Requisitos obrigatórios (Lei 12.651/2012 — Código Florestal):
+            </strong>
+            <ul style="margin: 8px 0 0 18px; font-size:0.82rem; line-height:1.75;">
+              <li data-pt="CAR — Cadastro Ambiental Rural ativo e válido no SICAR" data-en="CAR — Active and valid Rural Environmental Registry in SICAR">CAR — Cadastro Ambiental Rural ativo e válido no SICAR</li>
+              <li data-pt="Delimitação de Área de Preservação Permanente (APP) conforme §1º do Art. 4º" data-en="Delimitation of Permanent Preservation Area (APP) per Art. 4, §1">Delimitação de APP conforme Art. 4º</li>
+              <li data-pt="Reserva Legal (RL) averbada conforme bioma: 80% (Amazônia), 35% (Cerrado Amazônia Legal), 20% (demais biomas)" data-en="Legal Reserve (RL) registered as per biome: 80% (Amazon), 35% (Cerrado Amazon Legal), 20% (other biomes)">Reserva Legal averbada conforme bioma</li>
+              <li data-pt="PRA — Programa de Regularização Ambiental (quando aplicável)" data-en="PRA — Environmental Regularization Program (when applicable)">PRA — Programa de Regularização Ambiental (quando aplicável)</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /SEÇÃO 1 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 2 — ZONEAMENTO
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s2">
+      <div class="section-header">
+        <div class="sec-num">2</div>
+        <span class="sec-icon">🗺️</span>
+        <h2 data-pt="Zoneamento Ambiental e de Uso da Terra"
+            data-en="Environmental and Land Use Zoning">
+          Zoneamento Ambiental e de Uso da Terra
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <h3 data-pt="2.1 Categorias de Uso e Cobertura da Terra"
+              data-en="2.1 Land Use and Cover Categories">
+            2.1 Categorias de Uso e Cobertura da Terra
+          </h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Zona" data-en="Zone">Zona</th>
+                  <th data-pt="Descrição" data-en="Description">Descrição</th>
+                  <th data-pt="Elegibilidade PSA" data-en="PES Eligibility">Elegibilidade PSA</th>
+                  <th data-pt="Potencial de Créditos" data-en="Credit Potential">Potencial Créditos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong data-pt="Z1 — Preservação" data-en="Z1 — Preservation">Z1 — Preservação</strong></td>
+                  <td data-pt="APP, RL, RPPN — vegetação nativa íntegra" data-en="APP, RL, RPPN — intact native vegetation">APP, RL, RPPN — vegetação nativa íntegra</td>
+                  <td><span class="badge badge-green" data-pt="Alta" data-en="High">Alta</span></td>
+                  <td data-pt="REDD+, Conservação" data-en="REDD+, Conservation">REDD+, Conservação</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Z2 — Restauração" data-en="Z2 — Restoration">Z2 — Restauração</strong></td>
+                  <td data-pt="Áreas degradadas em processo de recuperação" data-en="Degraded areas undergoing recovery">Áreas degradadas em recuperação</td>
+                  <td><span class="badge badge-green" data-pt="Alta" data-en="High">Alta</span></td>
+                  <td data-pt="ARR, IFM, Biodiversidade" data-en="ARR, IFM, Biodiversity">ARR, IFM, Biodiversidade</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Z3 — Produção Sustentável" data-en="Z3 — Sustainable Production">Z3 — Produção Sustentável</strong></td>
+                  <td data-pt="Pastagem e lavoura com práticas regenerativas" data-en="Pasture and crops with regenerative practices">Pastagem e lavoura regenerativas</td>
+                  <td><span class="badge badge-amber" data-pt="Média" data-en="Medium">Média</span></td>
+                  <td data-pt="ALM, IFM, Solo" data-en="ALM, IFM, Soil">ALM, IFM, Solo</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Z4 — Uso Intensivo" data-en="Z4 — Intensive Use">Z4 — Uso Intensivo</strong></td>
+                  <td data-pt="Áreas de produção convencional sem práticas sustentáveis" data-en="Conventional production areas without sustainable practices">Produção convencional</td>
+                  <td><span class="badge badge-red" data-pt="Baixa" data-en="Low">Baixa</span></td>
+                  <td data-pt="Potencial futuro após transição" data-en="Future potential after transition">Potencial pós-transição</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="2.2 Ferramentas de Geoprocessamento Recomendadas"
+              data-en="2.2 Recommended Geoprocessing Tools">
+            2.2 Ferramentas de Geoprocessamento Recomendadas
+          </h3>
+          <div class="standard-grid">
+            <div class="standard-card">
+              <h4>🛰️ MapBiomas</h4>
+              <p data-pt="Mapeamento anual de cobertura e uso da terra em todos os biomas brasileiros, baseado em Sentinel-2 e Landsat." data-en="Annual land cover and use mapping for all Brazilian biomes, based on Sentinel-2 and Landsat.">Mapeamento anual de cobertura e uso da terra em todos os biomas. Base Sentinel-2 e Landsat.</p>
+            </div>
+            <div class="standard-card">
+              <h4>🌐 PRODES / INPE</h4>
+              <p data-pt="Monitoramento oficial do desmatamento na Amazônia Legal e demais biomas." data-en="Official deforestation monitoring for the Legal Amazon and other biomes.">Monitoramento oficial do desmatamento — Amazônia Legal e demais biomas.</p>
+            </div>
+            <div class="standard-card">
+              <h4>📡 SICAR</h4>
+              <p data-pt="Sistema Nacional de Cadastro Ambiental Rural — base de dados oficial de propriedades, APP e RL." data-en="National Rural Environmental Registry System — official database for properties, APP and RL.">Sistema Nacional de CAR — dados oficiais de APP e Reserva Legal.</p>
+            </div>
+            <div class="standard-card">
+              <h4>🌍 Google Earth Engine</h4>
+              <p data-pt="Plataforma de análise geoespacial em nuvem para processamento de séries históricas de imagens de satélite." data-en="Cloud geospatial analysis platform for processing historical satellite image time series.">Análise geoespacial em nuvem — séries históricas de imagens de satélite.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 2 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 3 — PROTOCOLO REGENERATIVO
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s3">
+      <div class="section-header">
+        <div class="sec-num">3</div>
+        <span class="sec-icon">🌱</span>
+        <h2 data-pt="Protocolo de Transição Regenerativa"
+            data-en="Regenerative Transition Protocol">
+          Protocolo de Transição Regenerativa
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <h3 data-pt="3.1 Práticas Regenerativas por Categoria de Uso"
+              data-en="3.1 Regenerative Practices by Land Use Category">
+            3.1 Práticas Regenerativas por Categoria de Uso
+          </h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Prática" data-en="Practice">Prática</th>
+                  <th data-pt="Aplicação" data-en="Application">Aplicação</th>
+                  <th data-pt="Benefício Principal" data-en="Main Benefit">Benefício</th>
+                  <th data-pt="Standard Verra" data-en="Verra Standard">Standard Verra</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-pt="Integração Lavoura-Pecuária-Floresta (iLPF)" data-en="Crop-Livestock-Forest Integration (CLFI)"><strong>iLPF</strong></td>
+                  <td data-pt="Pastagens degradadas e lavouras convencionais" data-en="Degraded pastures and conventional crops">Pastagens degradadas</td>
+                  <td data-pt="Sequestro de carbono, diversificação de renda" data-en="Carbon sequestration, income diversification">Sequestro C, renda</td>
+                  <td>VM0042 / ALM</td>
+                </tr>
+                <tr>
+                  <td data-pt="Plantio Direto / Solo Vivo" data-en="No-Till Farming / Living Soil"><strong data-pt="Plantio Direto" data-en="No-Till">Plantio Direto</strong></td>
+                  <td data-pt="Lavouras em transição" data-en="Transitional croplands">Lavouras em transição</td>
+                  <td data-pt="Conservação do solo, redução de emissões" data-en="Soil conservation, emission reduction">Solo, emissões</td>
+                  <td>VM0042</td>
+                </tr>
+                <tr>
+                  <td data-pt="Restauração Ecológica Ativa" data-en="Active Ecological Restoration"><strong data-pt="Restauração Ativa" data-en="Active Restoration">Restauração Ativa</strong></td>
+                  <td data-pt="Áreas de APP e RL degradadas" data-en="Degraded APP and RL areas">APP e RL degradadas</td>
+                  <td data-pt="Biodiversidade, carbono, serviços hídricos" data-en="Biodiversity, carbon, water services">Bio, carbono, água</td>
+                  <td>VM0048 / ARR</td>
+                </tr>
+                <tr>
+                  <td data-pt="Regeneração Natural Assistida (RNAss)" data-en="Assisted Natural Regeneration (ANR)"><strong>RNAss</strong></td>
+                  <td data-pt="Áreas com potencial de regeneração espontânea" data-en="Areas with spontaneous regeneration potential">Potencial regeneração</td>
+                  <td data-pt="Baixo custo, alto potencial de carbono" data-en="Low cost, high carbon potential">Baixo custo, carbono</td>
+                  <td>VM0048</td>
+                </tr>
+                <tr>
+                  <td data-pt="Manejo de Pastagem Rotacionada" data-en="Rotational Grazing Management"><strong data-pt="Pastagem Rotacionada" data-en="Rotational Grazing">Pastagem Rotacionada</strong></td>
+                  <td data-pt="Pecuária extensiva em transição" data-en="Extensive livestock in transition">Pecuária extensiva</td>
+                  <td data-pt="COS, biodiversidade de pastagens, raízes profundas" data-en="SOC, pasture biodiversity, deep roots">COS, biodiversidade</td>
+                  <td>VM0042 / ALM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="3.2 Fases de Implementação"
+              data-en="3.2 Implementation Phases">3.2 Fases de Implementação</h3>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-year" data-pt="FASE 0 — Meses 1-3 | Diagnóstico e Linha de Base"
+                                   data-en="PHASE 0 — Months 1-3 | Diagnosis and Baseline">
+                FASE 0 — Meses 1-3 | Diagnóstico e Linha de Base
+              </div>
+              <p class="tl-desc" data-pt="Coleta de dados geoespaciais, análises de solo, levantamento de biodiversidade, regularização do CAR, definição das zonas de manejo e elaboração do PMR completo."
+                 data-en="Geospatial data collection, soil analyses, biodiversity survey, CAR regularization, definition of management zones and preparation of the complete RMP.">
+                Coleta de dados geoespaciais, análises de solo, levantamento de biodiversidade, regularização do CAR, definição das zonas de manejo e elaboração do PMR completo.
+              </p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year" data-pt="FASE 1 — Meses 4-12 | Implantação Piloto"
+                                   data-en="PHASE 1 — Months 4-12 | Pilot Implementation">
+                FASE 1 — Meses 4-12 | Implantação Piloto
+              </div>
+              <p class="tl-desc" data-pt="Implementação das práticas regenerativas prioritárias, instalação de parcelas de monitoramento, início do MRV via plataforma IBEDIS e engajamento FPIC com produtores."
+                 data-en="Implementation of priority regenerative practices, installation of monitoring plots, start of MRV via IBEDIS platform and FPIC engagement with producers.">
+                Implementação das práticas prioritárias, parcelas de monitoramento, início do MRV via IBEDIS e engajamento FPIC.
+              </p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year" data-pt="FASE 2 — Anos 2-3 | Escalonamento"
+                                   data-en="PHASE 2 — Years 2-3 | Scaling">
+                FASE 2 — Anos 2-3 | Escalonamento
+              </div>
+              <p class="tl-desc" data-pt="Expansão das áreas sob manejo regenerativo, primeira verificação independente (VVB acreditado Verra), emissão preliminar de créditos de carbono e biodiversidade."
+                 data-en="Expansion of areas under regenerative management, first independent verification (Verra-accredited VVB), preliminary issuance of carbon and biodiversity credits.">
+                Expansão das áreas, primeira verificação VVB Verra, emissão preliminar de créditos.
+              </p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year" data-pt="FASE 3 — Anos 4-10 | Consolidação e Mercado"
+                                   data-en="PHASE 3 — Years 4-10 | Consolidation and Market">
+                FASE 3 — Anos 4-10 | Consolidação e Mercado
+              </div>
+              <p class="tl-desc" data-pt="Consolidação do regime de manejo, reporte anual ao Verra Registry, comercialização de créditos VCUs e BUs nos mercados voluntário e regulado, monitoramento contínuo via Observa.Bio."
+                 data-en="Consolidation of management regime, annual reporting to Verra Registry, commercialization of VCUs and BUs in voluntary and regulated markets, continuous monitoring via Observa.Bio.">
+                Consolidação, reporte Verra, comercialização de VCUs e BUs, monitoramento Observa.Bio.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 3 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 4 — INDICADORES MRV
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s4">
+      <div class="section-header">
+        <div class="sec-num">4</div>
+        <span class="sec-icon">📊</span>
+        <h2 data-pt="Indicadores de Monitoramento — MRV"
+            data-en="Monitoring Indicators — MRV">
+          Indicadores de Monitoramento — MRV
+        </h2>
+      </div>
+      <div class="section-body">
+
+        <div class="info-box info-box-blue" style="margin-bottom:20px;">
+          <strong>📡 <span data-pt="Plataforma MRV:" data-en="MRV Platform:">Plataforma MRV:</span></strong>
+          <span data-pt="Todo o MRV é operacionalizado pela " data-en="All MRV is operationalized by the ">Todo o MRV é operacionalizado pela </span>
+          <a href="https://mrv.ibedis.org/" target="_blank" rel="noopener noreferrer"
+             style="color:var(--blue-dark);font-weight:700;">
+            <strong data-pt="Plataforma dMRV, e-CPR Verde &amp; Créditos de Carbono | IBEDIS"
+                    data-en="Platform dMRV, e-CPR Verde &amp; Carbon Credits | IBEDIS">
+              Plataforma dMRV, e-CPR Verde &amp; Créditos de Carbono | IBEDIS
+            </strong>
+          </a>
+          <span data-pt=", garantindo rastreabilidade, auditabilidade e conformidade com os padrões Verra e IPCC."
+                data-en=", ensuring traceability, auditability and compliance with Verra and IPCC standards.">
+            , garantindo rastreabilidade, auditabilidade e conformidade Verra/IPCC.
+          </span>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="4.1 Indicadores de GEE — Carbono e Metano"
+              data-en="4.1 GHG Indicators — Carbon and Methane">
+            4.1 Indicadores de GEE — Carbono e Metano
+          </h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Indicador" data-en="Indicator">Indicador</th>
+                  <th data-pt="Método de Medição" data-en="Measurement Method">Método</th>
+                  <th data-pt="Frequência" data-en="Frequency">Frequência</th>
+                  <th data-pt="Referência Normativa" data-en="Normative Reference">Referência</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-pt="Carbono Orgânico do Solo (COS)" data-en="Soil Organic Carbon (SOC)">COS — Carbono Orgânico do Solo</td>
+                  <td data-pt="Análise laboratorial — Walkley-Black / Combustão seca" data-en="Lab analysis — Walkley-Black / Dry combustion">Lab — Walkley-Black / Combustão seca</td>
+                  <td data-pt="Anual (0-30cm; 30-60cm)" data-en="Annual (0-30cm; 30-60cm)">Anual (0–30cm; 30–60cm)</td>
+                  <td>IPCC AR6 / VM0042</td>
+                </tr>
+                <tr>
+                  <td data-pt="Biomassa Acima do Solo (AGB)" data-en="Above-Ground Biomass (AGB)">AGB — Biomassa Acima do Solo</td>
+                  <td data-pt="Inventário florestal + alometria (equações Chave et al., 2014)" data-en="Forest inventory + allometry (Chave et al., 2014 equations)">Inventário + alometria (Chave 2014)</td>
+                  <td data-pt="A cada 2 anos" data-en="Every 2 years">A cada 2 anos</td>
+                  <td>VM0048 / VM0042</td>
+                </tr>
+                <tr>
+                  <td data-pt="Biomassa Abaixo do Solo (BGB)" data-en="Below-Ground Biomass (BGB)">BGB — Biomassa Abaixo do Solo</td>
+                  <td data-pt="Fator de razão raiz:parte aérea (IPCC Tier 1/2)" data-en="Root-to-shoot ratio factor (IPCC Tier 1/2)">Fator R:S (IPCC Tier 1/2)</td>
+                  <td data-pt="A cada 2 anos" data-en="Every 2 years">A cada 2 anos</td>
+                  <td>IPCC AR6</td>
+                </tr>
+                <tr>
+                  <td data-pt="Emissões de CH₄ (pastagem/gado)" data-en="CH₄ Emissions (pasture/cattle)">Emissões CH₄</td>
+                  <td data-pt="Câmaras de fluxo estático + IPCC Tier 2" data-en="Static flux chambers + IPCC Tier 2">Câmaras de fluxo + IPCC Tier 2</td>
+                  <td data-pt="Semestral" data-en="Semi-annual">Semestral</td>
+                  <td>IPCC AR6 Vol. 4</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="4.2 Indicadores de Biodiversidade"
+              data-en="4.2 Biodiversity Indicators">
+            4.2 Indicadores de Biodiversidade
+          </h3>
+          <div class="info-box info-box-green" style="margin-bottom:14px;">
+            <strong>🔭 <span data-pt="Acompanhamento científico:" data-en="Scientific monitoring:">Acompanhamento científico:</span></strong>
+            <span data-pt="Todos os indicadores de biodiversidade são monitorados e validados pelo " data-en="All biodiversity indicators are monitored and validated by the ">Todos os indicadores são monitorados pelo </span>
+            <a href="https://observa.bio/" target="_blank" rel="noopener noreferrer"
+               style="color:var(--green-dark);font-weight:700;">
+              <strong>Observa.Bio — Observatório de Biodiversidade do Brasil</strong>
+            </a>.
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Indicador" data-en="Indicator">Indicador</th>
+                  <th data-pt="Método" data-en="Method">Método</th>
+                  <th data-pt="Frequência" data-en="Frequency">Frequência</th>
+                  <th data-pt="Referência" data-en="Reference">Referência</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-pt="Riqueza de espécies (flora e fauna)" data-en="Species richness (flora and fauna)">Riqueza de espécies</td>
+                  <td data-pt="Transectos, parcelas fitossociológicas, armadilhas fotográficas" data-en="Transects, phytosociological plots, camera traps">Transectos, parcelas, câmeras</td>
+                  <td data-pt="Anual" data-en="Annual">Anual</td>
+                  <td>CBD / VM0048-CCB</td>
+                </tr>
+                <tr>
+                  <td data-pt="Índice de Integridade Biótica (IBI)" data-en="Biotic Integrity Index (BII)">IBI — Integridade Biótica</td>
+                  <td data-pt="Avaliação multi-táxon integrada (aves, mamíferos, herpetofauna)" data-en="Integrated multi-taxon assessment (birds, mammals, herpetofauna)">Multi-táxon integrado</td>
+                  <td data-pt="A cada 2 anos" data-en="Every 2 years">A cada 2 anos</td>
+                  <td>Observa.Bio / IUCN</td>
+                </tr>
+                <tr>
+                  <td data-pt="Conectividade de Habitat" data-en="Habitat Connectivity">Conectividade de Habitat</td>
+                  <td data-pt="Modelagem de paisagem (Circuitscape / Conefor)" data-en="Landscape modeling (Circuitscape / Conefor)">Circuitscape / Conefor</td>
+                  <td data-pt="A cada 3 anos" data-en="Every 3 years">A cada 3 anos</td>
+                  <td>VM0048-CCB</td>
+                </tr>
+                <tr>
+                  <td data-pt="Espécies Ameaçadas (Lista Vermelha)" data-en="Threatened Species (Red List)">Espécies Ameaçadas</td>
+                  <td data-pt="Monitoramento dirigido + eDNA (quando disponível)" data-en="Targeted monitoring + eDNA (when available)">Monitoramento + eDNA</td>
+                  <td data-pt="Anual" data-en="Annual">Anual</td>
+                  <td>IUCN / MMA Portaria 148/2022</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- /SEÇÃO 4 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 5 — METAS E MILESTONES
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s5">
+      <div class="section-header">
+        <div class="sec-num">5</div>
+        <span class="sec-icon">🎯</span>
+        <h2 data-pt="Metas e Milestones — 1, 3, 5 e 10 Anos"
+            data-en="Goals &amp; Milestones — 1, 3, 5 and 10 Years">
+          Metas e Milestones — 1, 3, 5 e 10 Anos
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <h3 data-pt="5.1 Progressão de Indicadores-Chave"
+              data-en="5.1 Key Indicator Progression">5.1 Progressão de Indicadores-Chave</h3>
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span data-pt="🌱 Área sob Manejo Regenerativo" data-en="🌱 Area under Regenerative Management">🌱 Área sob Manejo Regenerativo</span>
+              <span data-pt="Meta: 100% até Ano 5" data-en="Goal: 100% by Year 5">Meta: 100% · Ano 5</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span data-pt="🔬 COS — Incremento de Carbono no Solo" data-en="🔬 SOC — Soil Carbon Increment">🔬 COS — Incremento no Solo</span>
+              <span data-pt="Meta: +30% até Ano 10" data-en="Goal: +30% by Year 10">Meta: +30% · Ano 10</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span data-pt="🦋 Riqueza de Espécies — Incremento" data-en="🦋 Species Richness — Increment">🦋 Riqueza de Espécies</span>
+              <span data-pt="Meta: +25% até Ano 5" data-en="Goal: +25% by Year 5">Meta: +25% · Ano 5</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:5%"></div></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span data-pt="💳 Créditos Emitidos (VCU + BU)" data-en="💳 Credits Issued (VCU + BU)">💳 Créditos Emitidos (VCU + BU)</span>
+              <span data-pt="Meta: Emissão a partir do Ano 2" data-en="Goal: Issuance from Year 2">Meta: Emissão · Ano 2+</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+          </div>
+          <p style="font-size:0.72rem;color:#888;margin-top:8px;"
+             data-pt="[Barras representam estado inicial — Fase 0. Dados reais inseridos ao longo do projeto via Plataforma IBEDIS.]"
+             data-en="[Bars represent initial state — Phase 0. Real data entered throughout the project via IBEDIS Platform.]">
+            [Barras representam estado inicial — Fase 0. Dados reais inseridos via Plataforma IBEDIS.]
+          </p>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="5.2 Tabela de Milestones por Ano"
+              data-en="5.2 Milestones Table by Year">5.2 Milestones por Ano</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Horizonte" data-en="Horizon">Horizonte</th>
+                  <th data-pt="Milestone Técnico" data-en="Technical Milestone">Milestone Técnico</th>
+                  <th data-pt="Milestone de Mercado" data-en="Market Milestone">Milestone de Mercado</th>
+                  <th data-pt="Responsável" data-en="Responsible">Responsável</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong data-pt="Ano 1" data-en="Year 1">Ano 1</strong></td>
+                  <td data-pt="PMR aprovado, CAR regularizado, parcelas MRV instaladas" data-en="RMP approved, CAR regularized, MRV plots installed">PMR aprovado, CAR regularizado, parcelas MRV</td>
+                  <td data-pt="PDD submetido ao Verra" data-en="PDD submitted to Verra">PDD submetido ao Verra</td>
+                  <td data-pt="Brasil Carbono + IBEDIS" data-en="Brasil Carbono + IBEDIS">Brasil Carbono + IBEDIS</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Ano 3" data-en="Year 3">Ano 3</strong></td>
+                  <td data-pt="Primeira verificação VVB concluída, relatório MRV publicado" data-en="First VVB verification completed, MRV report published">1ª verificação VVB, relatório MRV</td>
+                  <td data-pt="Primeiros VCUs registrados no Verra Registry" data-en="First VCUs registered in Verra Registry">1ºs VCUs registrados</td>
+                  <td data-pt="Brasil Carbono + IBEDIS + Observa.Bio" data-en="Brasil Carbono + IBEDIS + Observa.Bio">Brasil Carbono + IBEDIS + Observa.Bio</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Ano 5" data-en="Year 5">Ano 5</strong></td>
+                  <td data-pt="100% da área elegível sob manejo regenerativo, relatório biodiversidade consolidado" data-en="100% of eligible area under regenerative management, consolidated biodiversity report">100% área elegível, relatório bio</td>
+                  <td data-pt="Créditos de Biodiversidade (BU) emitidos, comercialização ativa" data-en="Biodiversity Units (BU) issued, active commercialization">BUs emitidos, comercialização ativa</td>
+                  <td data-pt="BGL + Green Credit + CC Ventures" data-en="BGL + Green Credit + CC Ventures">BGL + Green Credit + CC Ventures</td>
+                </tr>
+                <tr>
+                  <td><strong data-pt="Ano 10" data-en="Year 10">Ano 10</strong></td>
+                  <td data-pt="Avaliação de impacto completa, candidatura a renovação do projeto Verra (30 anos)" data-en="Full impact assessment, application for Verra project renewal (30 years)">Avaliação impacto, renovação Verra 30a</td>
+                  <td data-pt="Portfólio consolidado, acesso ao mercado regulado (Artigo 6 AP)" data-en="Consolidated portfolio, access to regulated market (Article 6 PA)">Portfólio, mercado regulado Art. 6</td>
+                  <td data-pt="Consórcio completo" data-en="Full consortium">Consórcio completo</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 5 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 6 — ENGAJAMENTO FPIC
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s6">
+      <div class="section-header">
+        <div class="sec-num">6</div>
+        <span class="sec-icon">🤝</span>
+        <h2 data-pt="Engajamento com Produtores Rurais — FPIC e ATER"
+            data-en="Rural Producer Engagement — FPIC and ATER">
+          Engajamento com Produtores Rurais — FPIC e ATER
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <h3 data-pt="6.1 Protocolo FPIC — Consentimento Livre, Prévio e Informado"
+              data-en="6.1 FPIC Protocol — Free, Prior and Informed Consent">
+            6.1 Protocolo FPIC — Consentimento Livre, Prévio e Informado
+          </h3>
+          <div class="info-box info-box-blue">
+            <strong data-pt="Base normativa:" data-en="Normative basis:">Base normativa:</strong>
+            <span data-pt=" Convenção 169 OIT · Declaração ONU sobre Direitos dos Povos Indígenas (UNDRIP) · CCB Standard (Gold Level Climate, Community and Biodiversity) · Verra SD VISta"
+                  data-en=" ILO Convention 169 · UN Declaration on the Rights of Indigenous Peoples (UNDRIP) · CCB Standard (Gold Level) · Verra SD VISta">
+              Convenção 169 OIT · UNDRIP · CCB Standard · Verra SD VISta
+            </span>
+          </div>
+          <div class="table-wrap" style="margin-top:14px;">
+            <table>
+              <thead>
+                <tr>
+                  <th data-pt="Etapa FPIC" data-en="FPIC Stage">Etapa FPIC</th>
+                  <th data-pt="Ações" data-en="Actions">Ações</th>
+                  <th data-pt="Prazo" data-en="Deadline">Prazo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-pt="1. Identificação das partes interessadas" data-en="1. Stakeholder identification">1. Identificação de stakeholders</td>
+                  <td data-pt="Mapeamento de comunidades, povos tradicionais, agricultores familiares e assentados na área de influência do projeto" data-en="Mapping of communities, traditional peoples, family farmers and settlers in the project's area of influence">Mapeamento de comunidades e partes afetadas</td>
+                  <td data-pt="Fase 0 — Mês 1" data-en="Phase 0 — Month 1">Fase 0 — Mês 1</td>
+                </tr>
+                <tr>
+                  <td data-pt="2. Consulta e informação" data-en="2. Consultation and information">2. Consulta e informação</td>
+                  <td data-pt="Reuniões presenciais, material em linguagem acessível, tradução quando necessário" data-en="In-person meetings, accessible language materials, translation when necessary">Reuniões, material acessível, tradução</td>
+                  <td data-pt="Fase 0 — Meses 1-2" data-en="Phase 0 — Months 1-2">Fase 0 — Meses 1-2</td>
+                </tr>
+                <tr>
+                  <td data-pt="3. Negociação e acordo" data-en="3. Negotiation and agreement">3. Negociação e acordo</td>
+                  <td data-pt="Definição de benefícios, repartição equitativa, mecanismo de queixa formal" data-en="Definition of benefits, equitable sharing, formal grievance mechanism">Benefícios, repartição, mecanismo queixa</td>
+                  <td data-pt="Fase 0 — Mês 2-3" data-en="Phase 0 — Month 2-3">Fase 0 — Meses 2-3</td>
+                </tr>
+                <tr>
+                  <td data-pt="4. Documentação do consentimento" data-en="4. Consent documentation">4. Documentação do consentimento</td>
+                  <td data-pt="Atas, termos assinados, registro em áudio/vídeo (quando autorizado)" data-en="Minutes, signed terms, audio/video recording (when authorized)">Atas, termos assinados, registro A/V</td>
+                  <td data-pt="Fase 0 — Mês 3" data-en="Phase 0 — Month 3">Fase 0 — Mês 3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="6.2 ATER — Assistência Técnica e Extensão Rural"
+              data-en="6.2 ATER — Technical Assistance and Rural Extension">
+            6.2 ATER — Assistência Técnica e Extensão Rural
+          </h3>
+          <div class="standard-grid">
+            <div class="standard-card">
+              <h4 data-pt="📚 Capacitação Técnica" data-en="📚 Technical Training">📚 Capacitação Técnica</h4>
+              <p data-pt="Cursos, dias de campo e oficinas sobre práticas regenerativas, uso do CAR, e acesso ao PSA." data-en="Courses, field days and workshops on regenerative practices, CAR use, and PES access.">Cursos, dias de campo e oficinas sobre práticas regenerativas e acesso ao PSA.</p>
+            </div>
+            <div class="standard-card">
+              <h4 data-pt="📲 ATER Digital" data-en="📲 Digital ATER">📲 ATER Digital</h4>
+              <p data-pt="Apoio via plataforma IBEDIS para registro de atividades, consulta de indicadores e acesso a laudos técnicos." data-en="Support via IBEDIS platform for activity registration, indicator consultation and access to technical reports.">Apoio via IBEDIS — registro de atividades e laudos técnicos.</p>
+            </div>
+            <div class="standard-card">
+              <h4 data-pt="🤲 Repartição de Benefícios" data-en="🤲 Benefit Sharing">🤲 Repartição de Benefícios</h4>
+              <p data-pt="Distribuição equitativa dos recursos PSA e receita de créditos, conforme acordo FPIC documentado." data-en="Equitable distribution of PES resources and credit revenue, per documented FPIC agreement.">Distribuição equitativa de recursos PSA e créditos conforme FPIC.</p>
+            </div>
+            <div class="standard-card">
+              <h4 data-pt="📣 Mecanismo de Queixa" data-en="📣 Grievance Mechanism">📣 Mecanismo de Queixa</h4>
+              <p data-pt="Canal formal para reclamações, sugestões e conflitos — prazo de resposta máximo de 30 dias, registrado na plataforma IBEDIS." data-en="Formal channel for complaints, suggestions and conflicts — maximum 30-day response deadline, recorded in IBEDIS platform.">Canal formal — resposta em 30 dias, registrado na IBEDIS.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 6 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 7 — RISCOS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s7">
+      <div class="section-header">
+        <div class="sec-num">7</div>
+        <span class="sec-icon">⚠️</span>
+        <h2 data-pt="Matriz de Riscos e Medidas de Mitigação"
+            data-en="Risk Matrix and Mitigation Measures">
+          Matriz de Riscos e Medidas de Mitigação
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="risk-grid">
+          <div class="risk-card risk-alto">
+            <h4>🔴 <span data-pt="Desmatamento Ilegal" data-en="Illegal Deforestation">Desmatamento Ilegal</span></h4>
+            <p data-pt="Risco: Alto | Impacto: Reversão de créditos | Mitigação: Monitoramento PRODES/DETER em tempo real via IBEDIS + seguro de buffer pool Verra." data-en="Risk: High | Impact: Credit reversal | Mitigation: PRODES/DETER monitoring in real time via IBEDIS + Verra buffer pool insurance.">
+              <strong data-pt="Risco: Alto" data-en="Risk: High">Risco: Alto</strong> | 
+              <span data-pt="Mitigação: Monitoramento PRODES/DETER via IBEDIS + buffer pool Verra." data-en="Mitigation: PRODES/DETER monitoring via IBEDIS + Verra buffer pool.">Mitigação: Monitoramento PRODES/DETER + buffer pool Verra.</span>
+            </p>
+          </div>
+          <div class="risk-card risk-alto">
+            <h4>🔴 <span data-pt="Incêndios e Eventos Climáticos Extremos" data-en="Fires and Extreme Climate Events">Incêndios e Eventos Extremos</span></h4>
+            <p data-pt="Risco: Alto | Mitigação: Aceiros, brigadas comunitárias, Plano de Emergência Climática, buffer pool 10-20% dos créditos." data-en="Risk: High | Mitigation: Firebreaks, community brigades, Climate Emergency Plan, 10-20% credit buffer pool.">
+              <strong data-pt="Risco: Alto" data-en="Risk: High">Risco: Alto</strong> |
+              <span data-pt="Mitigação: Aceiros, brigadas, Plano de Emergência, buffer 10-20%." data-en="Mitigation: Firebreaks, brigades, Emergency Plan, 10-20% buffer.">Aceiros, brigadas, buffer 10-20%.</span>
+            </p>
+          </div>
+          <div class="risk-card risk-medio">
+            <h4>🟡 <span data-pt="Inadimplência de Produtores" data-en="Producer Default">Inadimplência de Produtores</span></h4>
+            <p data-pt="Risco: Médio | Mitigação: Contratos com cláusula de reversibilidade, retenção de créditos como garantia e FPIC documentado." data-en="Risk: Medium | Mitigation: Contracts with reversibility clause, credit retention as guarantee and documented FPIC.">
+              <strong data-pt="Risco: Médio" data-en="Risk: Medium">Risco: Médio</strong> |
+              <span data-pt="Contratos reversíveis, retenção de créditos como garantia." data-en="Reversible contracts, credit retention as guarantee.">Contratos reversíveis, retenção garantia.</span>
+            </p>
+          </div>
+          <div class="risk-card risk-medio">
+            <h4>🟡 <span data-pt="Volatilidade do Preço de Carbono" data-en="Carbon Price Volatility">Volatilidade do Preço de Carbono</span></h4>
+            <p data-pt="Risco: Médio | Mitigação: Diversificação entre VCU (Verra), BU (biodiversidade) e mercado regulado (Artigo 6 Acordo de Paris)." data-en="Risk: Medium | Mitigation: Diversification between VCU (Verra), BU (biodiversity) and regulated market (Article 6 Paris Agreement).">
+              <strong data-pt="Risco: Médio" data-en="Risk: Medium">Risco: Médio</strong> |
+              <span data-pt="Diversificação VCU + BU + Artigo 6." data-en="Diversification VCU + BU + Article 6.">VCU + BU + Artigo 6.</span>
+            </p>
+          </div>
+          <div class="risk-card risk-baixo">
+            <h4>🟢 <span data-pt="Mudanças Regulatórias" data-en="Regulatory Changes">Mudanças Regulatórias</span></h4>
+            <p data-pt="Risco: Baixo-Médio | Mitigação: Monitoramento do SBCE (Sistema Brasileiro de Comércio de Emissões) e atualização contínua do PDD conforme novos frameworks." data-en="Risk: Low-Medium | Mitigation: SBCE (Brazilian Emissions Trading System) monitoring and continuous PDD update per new frameworks.">
+              <strong data-pt="Risco: Baixo-Médio" data-en="Risk: Low-Medium">Risco: Baixo-Médio</strong> |
+              <span data-pt="Monitoramento SBCE, PDD adaptável." data-en="SBCE monitoring, adaptable PDD.">Monitoramento SBCE, PDD adaptável.</span>
+            </p>
+          </div>
+          <div class="risk-card risk-baixo">
+            <h4>🟢 <span data-pt="Falha na Plataforma MRV" data-en="MRV Platform Failure">Falha na Plataforma MRV</span></h4>
+            <p data-pt="Risco: Baixo | Mitigação: Redundância de dados, backup offline e SLA contratual com IBEDIS para continuidade operacional." data-en="Risk: Low | Mitigation: Data redundancy, offline backup and contractual SLA with IBEDIS for operational continuity.">
+              <strong data-pt="Risco: Baixo" data-en="Risk: Low">Risco: Baixo</strong> |
+              <span data-pt="Redundância, backup offline, SLA IBEDIS." data-en="Redundancy, offline backup, IBEDIS SLA.">Redundância, backup, SLA IBEDIS.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 7 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 8 — STANDARDS VERRA
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s8">
+      <div class="section-header">
+        <div class="sec-num">8</div>
+        <span class="sec-icon">🌍</span>
+        <h2 data-pt="Interface com Standards Internacionais — Verra e Artigo 6"
+            data-en="Interface with International Standards — Verra and Article 6">
+          Interface com Standards Internacionais — Verra e Artigo 6
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="standard-grid">
+          <div class="standard-card">
+            <h4>📋 VM0048</h4>
+            <p data-pt="Metodologia para Atividades de Manejo Florestal Melhorado (IFM) — aplicável a florestas tropicais e subtropicais, incluindo REDD+ e manejo de floresta nativa." data-en="Methodology for Improved Forest Management (IFM) activities — applicable to tropical and subtropical forests, including REDD+ and native forest management.">Metodologia IFM — florestas tropicais e subtropicais, REDD+ e floresta nativa.</p>
+          </div>
+          <div class="standard-card">
+            <h4>📋 VM0042</h4>
+            <p data-pt="Metodologia para Manejo Sustentável de Terras Agrícolas (ALM) — abrange integração lavoura-pecuária-floresta, plantio direto, pastagens e práticas de carbono no solo." data-en="Methodology for Sustainable Agricultural Land Management (ALM) — covers crop-livestock-forest integration, no-till, pastures and soil carbon practices.">Metodologia ALM — iLPF, plantio direto, pastagens e carbono no solo.</p>
+          </div>
+          <div class="standard-card">
+            <h4>🌿 CCB Standard</h4>
+            <p data-pt="Climate, Community and Biodiversity Standard — certificação adicional que verifica co-benefícios climáticos, comunitários e de biodiversidade além do carbono." data-en="Climate, Community and Biodiversity Standard — additional certification verifying climate, community and biodiversity co-benefits beyond carbon.">Certificação de co-benefícios climáticos, comunitários e de biodiversidade.</p>
+          </div>
+          <div class="standard-card">
+            <h4>🌐 Artigo 6 — AP</h4>
+            <p data-pt="Mecanismo do Acordo de Paris para cooperação internacional em redução de emissões — ITMOs (Internationally Transferred Mitigation Outcomes) para mercado regulado." data-en="Paris Agreement mechanism for international cooperation on emission reductions — ITMOs (Internationally Transferred Mitigation Outcomes) for regulated market.">ITMOs — mercado regulado internacional. NDC Brasil + parceiros europeus via CC Ventures.</p>
+          </div>
+          <div class="standard-card">
+            <h4>✅ ICVCM CCP</h4>
+            <p data-pt="Core Carbon Principles — padrão de integridade do Conselho de Supervisão do Mercado Voluntário de Carbono para créditos de alta qualidade." data-en="Core Carbon Principles — integrity standard from the Integrity Council for the Voluntary Carbon Market for high-quality credits.">Princípios de Integridade — padrão ICVCM para créditos de alta qualidade.</p>
+          </div>
+          <div class="standard-card">
+            <h4>🔭 SD VISta</h4>
+            <p data-pt="Verra Sustainable Development Verified Impact Standard — verificação de impactos nos Objetivos de Desenvolvimento Sustentável (ODS) da ONU." data-en="Verra Sustainable Development Verified Impact Standard — verification of impacts on UN Sustainable Development Goals (SDGs).">Verificação de impactos ODS — alinhamento com metas globais de sustentabilidade.</p>
+          </div>
+        </div>
+
+        <div class="info-box info-box-green" style="margin-top:22px;">
+          <strong>🌲 <span data-pt="Responsável técnico pela estruturação de todos os PDDs e metodologias Verra:" data-en="Technical responsible for structuring all Verra PDDs and methodologies:">Responsável técnico pelos PDDs e metodologias Verra:</span></strong>
+          <a href="https://www.brcarbono.com.br/" target="_blank" rel="noopener noreferrer"
+             style="color:var(--green-dark);font-weight:700;">
+            <strong data-pt="Brasil Carbono Florestal — Brasil Carbono"
+                    data-en="Brasil Carbono Florestal — Brasil Carbono">
+              Brasil Carbono Florestal — Brasil Carbono
+            </strong>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- /SEÇÃO 8 -->
+
+    <!-- ══════════════════════════════════════════════════════════
+         SEÇÃO 9 — REFERÊNCIAS
+    ══════════════════════════════════════════════════════════ -->
+    <div class="doc-section" id="s9">
+      <div class="section-header">
+        <div class="sec-num">9</div>
+        <span class="sec-icon">📚</span>
+        <h2 data-pt="Referências Bibliográficas e Normativas"
+            data-en="Bibliographic and Regulatory References">
+          Referências Bibliográficas e Normativas
+        </h2>
+      </div>
+      <div class="section-body">
+        <div class="subsection">
+          <h3 data-pt="9.1 Legislação Brasileira" data-en="9.1 Brazilian Legislation">9.1 Legislação Brasileira</h3>
+          <ul style="font-size:0.83rem;line-height:2;padding-left:20px;">
+            <li data-pt="Lei nº 12.651/2012 — Código Florestal Brasileiro" data-en="Law No. 12,651/2012 — Brazilian Forest Code">Lei nº 12.651/2012 — Código Florestal Brasileiro</li>
+            <li data-pt="Lei nº 12.187/2009 — Política Nacional sobre Mudança do Clima (PNMC)" data-en="Law No. 12,187/2009 — National Policy on Climate Change (PNMC)">Lei nº 12.187/2009 — PNMC</li>
+            <li data-pt="Lei nº 15.797/2025 — Sistema Brasileiro de Comércio de Emissões (SBCE)" data-en="Law No. 15,797/2025 — Brazilian Emissions Trading System (SBCE)">Lei nº 15.797/2025 — SBCE (Mercado de Carbono Regulado)</li>
+            <li data-pt="Lei nº 14.119/2021 — Política Nacional de Pagamento por Serviços Ambientais (PNPSA)" data-en="Law No. 14,119/2021 — National Policy on Payment for Environmental Services (PNPSA)">Lei nº 14.119/2021 — PNPSA</li>
+            <li data-pt="Lei nº 9.985/2000 — Sistema Nacional de Unidades de Conservação (SNUC)" data-en="Law No. 9,985/2000 — National System of Conservation Units (SNUC)">Lei nº 9.985/2000 — SNUC</li>
+            <li data-pt="MMA Portaria nº 148/2022 — Lista Vermelha de Espécies Ameaçadas" data-en="MMA Ordinance No. 148/2022 — Red List of Threatened Species">MMA Portaria nº 148/2022 — Lista Vermelha</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="9.2 Standards e Protocolos Internacionais" data-en="9.2 International Standards and Protocols">9.2 Standards e Protocolos Internacionais</h3>
+          <ul style="font-size:0.83rem;line-height:2;padding-left:20px;">
+            <li>Verra — VM0048 v1.0 (2023): Improved Forest Management Methodology</li>
+            <li>Verra — VM0042 v2.0 (2023): Sustainable Agricultural Land Management</li>
+            <li>Verra — Climate, Community and Biodiversity (CCB) Standard v3.1</li>
+            <li>Verra — SD VISta (Sustainable Development Verified Impact Standard)</li>
+            <li>ICVCM — Core Carbon Principles (CCP) v1.0 (2023)</li>
+            <li data-pt="IPCC AR6 — Sexto Relatório de Avaliação (2021-2023)" data-en="IPCC AR6 — Sixth Assessment Report (2021-2023)">IPCC AR6 — Sexto Relatório de Avaliação (2021-2023)</li>
+            <li>Acordo de Paris — Artigo 6: Mecanismos de Cooperação Internacional (ITMOs)</li>
+            <li>OIT Convenção 169 — Povos Indígenas e Tribais</li>
+            <li>UNDRIP — Declaração ONU sobre Direitos dos Povos Indígenas</li>
+          </ul>
+        </div>
+
+        <div class="subsection">
+          <h3 data-pt="9.3 Fontes Científicas e Técnicas" data-en="9.3 Scientific and Technical Sources">9.3 Fontes Científicas e Técnicas</h3>
+          <ul style="font-size:0.83rem;line-height:2;padding-left:20px;">
+            <li>Embrapa Solos — Sistema Brasileiro de Classificação de Solos (SiBCS), 5ª edição</li>
+            <li>MapBiomas — Coleção 9 (2024): Mapeamento Anual de Cobertura e Uso da Terra</li>
+            <li>SEEG/OC — Sistema de Estimativas de Emissões e Remoções de GEE, 2023</li>
+            <li>Chave et al. (2014) — Improved allometric models for tropical trees. Global Change Biology</li>
+            <li>INPE/PRODES — Monitoramento do Desmatamento da Floresta Amazônica Brasileira</li>
+            <li data-pt="Observa.Bio — Relatórios de Biodiversidade do Brasil (2024-2026)" data-en="Observa.Bio — Brazil Biodiversity Reports (2024-2026)">
+              <a href="https://observa.bio/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Observa.Bio</a> — Relatórios de Biodiversidade do Brasil
+            </li>
+          </ul>
+        </div>
+
+        <!-- Plataformas e parceiros — rodapé das referências -->
+        <div class="info-box info-box-green" style="margin-top:8px;">
+          <strong data-pt="🏛️ Plataformas e Parceiros Operacionais deste PMR:"
+                  data-en="🏛️ Operational Platforms and Partners of this RMP:">
+            🏛️ Plataformas e Parceiros Operacionais deste PMR:
+          </strong>
+          <ul style="margin:10px 0 0 16px;font-size:0.82rem;line-height:2;">
+            <li>
+              <a href="https://mrv.ibedis.org/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Plataforma dMRV, e-CPR Verde &amp; Créditos de Carbono | IBEDIS</a>
+              <span data-pt=" — MRV oficial do projeto" data-en=" — Official project MRV"> — MRV oficial</span>
+            </li>
+            <li>
+              <a href="https://observa.bio/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Observa.Bio — Observatório de Biodiversidade do Brasil</a>
+              <span data-pt=" — Acompanhamento científico" data-en=" — Scientific monitoring"> — Acompanhamento científico</span>
+            </li>
+            <li>
+              <a href="https://www.brcarbono.com.br/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Brasil Carbono Florestal — Brasil Carbono</a>
+              <span data-pt=" — Responsável técnico" data-en=" — Technical responsible"> — Responsável técnico</span>
+            </li>
+            <li>
+              <a href="https://biodiversitygroup.co.uk/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">BGL — Biodiversity Group</a>
+              <span data-pt=" — Promotor principal" data-en=" — Lead promoter"> — Promotor principal</span>
+            </li>
+            <li>
+              <a href="https://greencredit.agr.br/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Green Credit Ecosystems</a>
+              <span data-pt=" — Parceira operacional Brasil" data-en=" — Brazil operational partner"> — Parceira operacional Brasil</span>
+            </li>
+            <li>
+              <a href="https://ccventures.io/" target="_blank" rel="noopener noreferrer" style="color:var(--green-dark);font-weight:700;">Climate Change Ventures (CC Ventures)</a>
+              <span data-pt=" — Parceira estratégica Europa" data-en=" — Europe strategic partner"> — Parceira estratégica Europa</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <!-- /SEÇÃO 9 -->
+
+  </main>
+</div>
+<!-- /layout -->
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <p>
+    <strong>Green Credit Ecosystems</strong> ·
+    <strong>Biodiversity Group (BGL)</strong> ·
+    <strong>Brasil Carbono</strong> ·
+    <strong>IBEDIS</strong> ·
+    <strong>Observa.Bio</strong> ·
+    <strong>CC Ventures</strong>
+  </p>
+  <p style="margin-top:6px;">
+    <span data-pt="Plano de Manejo Regenerativo — PMR v1.0 · Junho 2026"
+          data-en="Regenerative Management Plan — RMP v1.0 · June 2026">
+      PMR v1.0 · Junho 2026
+    </span>
+  </p>
+  <p style="margin-top:6px;opacity:.7;font-size:0.70rem;"
+     data-pt="Documento técnico confidencial. Estimativas referenciadas cientificamente. Dados reais devem ser coletados na Fase 0 do projeto. Não substitui consultoria jurídica ou ambiental especializada."
+     data-en="Confidential technical document. Scientifically referenced estimates. Real data must be collected in Phase 0. Does not replace specialized legal or environmental consulting.">
+    Documento técnico confidencial. Estimativas referenciadas. Dados reais coletados na Fase 0. Não substitui consultoria especializada.
+  </p>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="back-top" aria-label="Voltar ao topo" title="Voltar ao topo">▲</button>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  /* ── IDIOMA ─────────────────────────────────────────────────── */
+  let currentLang = localStorage.getItem('pmr-lang') || 'pt';
+
+  function applyLanguage(lang) {
+    document.querySelectorAll('[data-pt]').forEach(el => {
+      const text = lang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+      if (text) el.innerHTML = text;
+    });
+    document.documentElement.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+    document.getElementById('lang-flag').textContent  = lang === 'pt' ? '🇬🇧' : '🇧🇷';
+    document.getElementById('lang-label').textContent = lang === 'pt' ? 'English' : 'Português';
+  }
+
+  function toggleLang() {
+    document.body.style.opacity    = '0.85';
+    document.body.style.transition = 'opacity 0.2s ease';
+    setTimeout(() => {
+      currentLang = currentLang === 'pt' ? 'en' : 'pt';
+      localStorage.setItem('pmr-lang', currentLang);
+      applyLanguage(currentLang);
+      document.body.style.opacity = '1';
+    }, 200);
+  }
+
+  applyLanguage(currentLang);
+
+  /* ── ACCORDION ──────────────────────────────────────────────── */
+  function toggleAccordion(btn) {
+    const content = btn.nextElementSibling;
+    const isOpen  = content.classList.contains('open');
+    btn.classList.toggle('open', !isOpen);
+    content.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+    content.style.maxHeight = !isOpen ? content.scrollHeight + 'px' : '0';
+  }
+
+  /* ── SIDEBAR MOBILE ─────────────────────────────────────────── */
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebar       = document.getElementById('sidebar');
+
+  sidebarToggle.addEventListener('click', () => {
+    const isOpen = sidebar.classList.toggle('open');
+    sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', e => {
+    if (window.innerWidth <= 900
+        && !sidebar.contains(e.target)
+        && !sidebarToggle.contains(e.target)) {
+      sidebar.classList.remove('open');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* ── BACK TO TOP ────────────────────────────────────────────── */
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('visible', window.scrollY > 300);
+  });
+  backTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ── ACTIVE NAV (IntersectionObserver) ─────────────────────── */
+  const sections  = document.querySelectorAll('[id]');
+  const navLinks  = document.querySelectorAll('.nav-link');
+  const headerH   = parseInt(getComputedStyle(document.documentElement)
+                      .getPropertyValue('--header-h')) || 70;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+        });
+      }
+    });
+  }, {
+    rootMargin: `-${headerH}px 0px -55% 0px`,
+    threshold: 0
+  });
+
+  sections.forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>
